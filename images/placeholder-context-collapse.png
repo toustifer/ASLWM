@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="350" viewBox="0 0 800 350">
+  <rect width="800" height="350" fill="#fcfcfc"/>
+  <rect x="1" y="1" width="798" height="348" fill="none" stroke="#ddd" stroke-width="2" stroke-dasharray="8,4" rx="8"/>
+  <text x="400" y="100" text-anchor="middle" font-family="Arial, sans-serif" font-size="20" fill="#e74c3c" font-weight="bold">Context Collapse Phenomenon</text>
+  <text x="400" y="140" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" fill="#999">Small Ctx: Action &#8594; Latent &#8594; Next State (action-conditioned)</text>
+  <text x="400" y="165" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" fill="#999">Large Ctx: History frames dominate &#8594; Action signal ignored &#8594; Video generation mode</text>
+  <text x="400" y="210" text-anchor="middle" font-family="Arial, sans-serif" font-size="13" fill="#bbb">[Replace with context collapse illustration]</text>
+  <text x="400" y="240" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#ddd">Recommended: 800 x 400+ px</text>
+</svg>

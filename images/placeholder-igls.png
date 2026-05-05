@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="350" viewBox="0 0 800 350">
+  <rect width="800" height="350" fill="#f0f4f8"/>
+  <rect x="1" y="1" width="798" height="348" fill="none" stroke="#1a6b9c" stroke-width="2" stroke-dasharray="8,4" rx="8"/>
+  <text x="400" y="160" text-anchor="middle" font-family="Arial, sans-serif" font-size="22" fill="#1a6b9c" font-weight="bold">IGLS Architecture</text>
+  <text x="400" y="200" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" fill="#999">Instruction (MineCLIP) + Latent Trajectory (ASLWM) &#8594; Alignment Score</text>
+  <text x="400" y="230" text-anchor="middle" font-family="Arial, sans-serif" font-size="13" fill="#bbb">[Replace with IGLS architecture diagram]</text>
+</svg>

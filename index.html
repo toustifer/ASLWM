@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>ASLWM: Action-Sensitive Latent World Model</title>
+    <link rel="icon" type="image/x-icon" href="images/favicon.ico">
+    <meta name="description" content="Action-Sensitive Latent World Model (ASLWM): Faithful Action-Conditioned Rollouts for Long-Horizon Planning">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Open Graph -->
+    <meta property="og:image" content="images/placeholder-arch.png">
+    <meta property="og:image:type" content="image/png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="">
+    <meta property="og:title" content="ASLWM: Action-Sensitive Latent World Model">
+    <meta property="og:description" content="Faithful Action-Conditioned Rollouts for Long-Horizon Planning">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="ASLWM: Action-Sensitive Latent World Model">
+    <meta name="twitter:description" content="Faithful Action-Conditioned Rollouts for Long-Horizon Planning">
+    <meta name="twitter:image" content="images/placeholder-arch.png">
+
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.8.0/codemirror.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/default.min.css">
+    <link rel="stylesheet" href="css/app.css">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.8.0/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.5.3/clipboard.min.js"></script>
+    <script src="js/app.js"></script>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top border-bottom">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="#">ASLWM</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="#abstract">Abstract</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#method">Method</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#exp1">Exp.1</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#exp2">Exp.2</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#exp3">Exp.3</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#bibtex">BibTeX</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container" id="main">
+
+        <!-- 1. Header: Title + Authors -->
+        <div class="row mt-5">
+            <div class="col-md-12 text-center">
+                <h1 class="fw-bold" style="font-size: 2.8rem;">
+                    Action-Sensitive Latent World Model
+                </h1>
+                <h3 class="text-muted mt-2">
+                    Faithful Action-Conditioned Rollouts for Long-Horizon Planning
+                </h3>
+            </div>
+        </div>
+
+        <div class="row mt-3">
+            <div class="col-md-12 text-center">
+                <ul class="list-inline authors">
+                    <li class="list-inline-item"><a href="#" target="_blank">Author 1</a><sup>*</sup></li>
+                    <li class="list-inline-item"><a href="#" target="_blank">Author 2</a><sup>*</sup></li>
+                    <li class="list-inline-item"><a href="#" target="_blank">Author 3</a></li>
+                    <li class="list-inline-item"><a href="#" target="_blank">Author 4</a></li>
+                    <li class="list-inline-item"><a href="#" target="_blank">Author 5</a></li>
+                </ul>
+                <p class="text-muted"><sup>*</sup>Equal contribution</p>
+                <p>
+                    <a href="#" class="text-decoration-none">
+                        <span class="fw-bold text-dark">Your Institution / Team</span>
+                    </a>
+                </p>
+            </div>
+        </div>
+
+        <!-- 2. Links Bar -->
+        <div class="row justify-content-md-center mt-4">
+            <div class="col-md-2 text-center">
+                <a href="#" class="text-decoration-none">
+                    <img src="images/icons/paper.svg" height="50px" alt="Paper" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2250%22 height=%2250%22><rect width=%2250%22 height=%2250%22 fill=%22%23ddd%22 rx=%228%22/><text x=%2225%22 y=%2232%22 text-anchor=%22middle%22 font-size=%2220%22>📄</text></svg>'">
+                    <h5 class="mt-1"><strong>Paper</strong></h5>
+                </a>
+            </div>
+            <div class="col-md-2 text-center">
+                <a href="#" class="text-decoration-none">
+                    <img src="images/icons/github.svg" height="50px" alt="Code" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2250%22 height=%2250%22><rect width=%2250%22 height=%2250%22 fill=%22%23ddd%22 rx=%228%22/><text x=%2225%22 y=%2232%22 text-anchor=%22middle%22 font-size=%2220%22>💻</text></svg>'">
+                    <h5 class="mt-1"><strong>Code</strong></h5>
+                </a>
+            </div>
+            <div class="col-md-2 text-center">
+                <a href="#results" class="text-decoration-none">
+                    <img src="images/icons/video.svg" height="50px" alt="Video" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2250%22 height=%2250%22><rect width=%2250%22 height=%2250%22 fill=%22%23ddd%22 rx=%228%22/><text x=%2225%22 y=%2232%22 text-anchor=%22middle%22 font-size=%2220%22>🎬</text></svg>'">
+                    <h5 class="mt-1"><strong>Video</strong></h5>
+                </a>
+            </div>
+            <div class="col-md-2 text-center">
+                <a href="#" class="text-decoration-none">
+                    <img src="images/icons/data.svg" height="50px" alt="Dataset" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2250%22 height=%2250%22><rect width=%2250%22 height=%2250%22 fill=%22%23ddd%22 rx=%228%22/><text x=%2225%22 y=%2232%22 text-anchor=%22middle%22 font-size=%2220%22>📊</text></svg>'">
+                    <h5 class="mt-1"><strong>Dataset</strong></h5>
+                </a>
+            </div>
+            <div class="col-md-2 text-center">
+                <a href="#" class="text-decoration-none">
+                    <img src="images/icons/model.svg" height="50px" alt="Model" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2250%22 height=%2250%22><rect width=%2250%22 height=%2250%22 fill=%22%23ddd%22 rx=%228%22/><text x=%2225%22 y=%2232%22 text-anchor=%22middle%22 font-size=%2220%22>🧠</text></svg>'">
+                    <h5 class="mt-1"><strong>Model</strong></h5>
+                </a>
+            </div>
+        </div>
+
+        <!-- 3. Architecture Diagram -->
+        <div class="row justify-content-md-center mt-5">
+            <div class="col-md-10 col-lg-8">
+                <p class="text-center">
+                    <img src="images/placeholder-arch.png" width="100%" alt="ASLWM Architecture Overview" class="img-fluid border rounded">
+                </p>
+                <p class="text-center text-muted fst-italic">
+                    Figure 1: Overview of the Action-Sensitive Latent World Model (ASLWM) framework.
+                    Three synergistic components: Contrastive Next-State Prediction Loss, Variational Inverse
+                    Dynamics Model (VIDM), and Action Sensitivity Metric ensure faithful action-conditioned
+                    rollouts over long horizons.
+                </p>
+            </div>
+        </div>
+
+        <!-- 4. Abstract -->
+        <div class="row justify-content-md-center mt-4" id="abstract">
+            <div class="col-md-10 col-lg-8">
+                <h3 class="mt-4 mb-3 section-heading">Abstract</h3>
+                <p class="text-justify">
+                    Building generalist agents that can autonomously perceive, reason, and act in open-world
+                    environments is a long-standing goal of AI research. While Vision-Language-Action (VLA)
+                    models have shown impressive results in game playing, they face three fundamental challenges:
+                    <strong>low sample efficiency</strong> (requiring hundreds of billions of pretraining tokens),
+                    <strong>prohibitive deployment cost</strong> (multi-billion parameter models with inference
+                    latency exceeding acceptable thresholds for real-time games), and
+                    <strong>weak long-horizon decision-making</strong> due to causal confusion and sparse rewards.
+                </p>
+                <p class="text-justify">
+                    World Model-based Planning offers a principled alternative by learning environment dynamics
+                    and performing look-ahead search in latent space. However, all latent world models face a
+                    critical challenge: <strong>compounding error</strong> — small per-step prediction shifts
+                    accumulate over rollout length, causing imagined trajectories to diverge from reality. We
+                    identify a more insidious phenomenon we term <strong>Context Collapse</strong>: increasing
+                    the history context window to mitigate compounding error paradoxically causes the model to
+                    degenerate into a "video generation" mode where action signals are progressively ignored.
+                </p>
+                <p class="text-justify">
+                    We propose the <strong>Action-Sensitive Latent World Model (ASLWM)</strong>, a framework
+                    that ensures latent dynamics faithfully respond to action signals at arbitrary rollout depths.
+                    ASLWM combines three synergistic components: (1) a <strong>contrastive next-state prediction
+                    loss</strong> that directly supervises action sensitivity, (2) a <strong>Variational Inverse
+                    Dynamics Model (VIDM)</strong> that forces the encoder to encode action-relevant information
+                    via an information bottleneck, and (3) an <strong>action sensitivity metric</strong> based
+                    on a variational lower bound of mutual information. We additionally propose the
+                    <strong>Instruction-Grounded Latent Scorer (IGLS)</strong>, a lightweight cross-modal
+                    alignment model (&lt;100M params) that aligns language instructions with latent trajectories,
+                    enabling instruction-goal planning at millisecond-level latency on consumer GPUs.
+                </p>
+                <p class="text-center mt-3">
+                    <img src="images/placeholder-teaser.png" width="85%" alt="Teaser" class="img-fluid border rounded">
+                </p>
+            </div>
+        </div>
+
+        <!-- 5. Method Overview -->
+        <div class="row justify-content-md-center mt-4" id="method">
+            <div class="col-md-10 col-lg-8">
+                <h3 class="mt-4 mb-3 section-heading">Method</h3>
+
+                <!-- Context Collapse -->
+                <div class="card mb-4 bg-light">
+                    <div class="card-header"><h5 class="mb-0">The Context Collapse Phenomenon</h5></div>
+                    <div class="card-body">
+                        <p>
+                            When the history context window is enlarged to anchor long-range predictions,
+                            the world model degenerates into a <em>sequence-to-latent</em> mode — it
+                            extrapolates future frames from historical patterns while increasingly ignoring
+                            injected action signals. This fundamentally undermines the model's utility as a
+                            planning tool, which critically depends on faithful action conditioning.
+                        </p>
+                        <p class="text-center">
+                            <img src="images/placeholder-context-collapse.png" width="80%" alt="Context Collapse Illustration" class="img-fluid border rounded">
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Three Components -->
+                <div class="card mb-4 bg-light">
+                    <div class="card-header"><h5 class="mb-0">Three Synergistic Components</h5></div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-4 mb-3">
+                                <div class="card h-100 border-primary">
+                                    <div class="card-body text-center">
+                                        <h5 class="card-title text-primary">1. Contrastive Loss</h5>
+                                        <p class="card-text small">Directly supervises action sensitivity by
+                                            enforcing that predictions using the correct action are closer to the
+                                            true next state than predictions using incorrect actions.</p>
+                                        <p class="small text-muted">&#8466;<sub>contrast</sub> = max(0, d(z<sub>true</sub>, &#382;<sub>correct</sub>) &minus; d(z<sub>true</sub>, &#382;<sub>wrong</sub>) + m)</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <div class="card h-100 border-success">
+                                    <div class="card-body text-center">
+                                        <h5 class="card-title text-success">2. VIDM</h5>
+                                        <p class="card-text small">Variational Inverse Dynamics Model constrains
+                                            the encoder via an information bottleneck, ensuring action-relevant
+                                            information is preserved in the latent representation.</p>
+                                        <p class="small text-muted">&#8466;<sub>VIDM</sub> = &minus;I(Z; A) + &beta; &middot; I(Z; X)</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <div class="card h-100 border-warning">
+                                    <div class="card-body text-center">
+                                        <h5 class="card-title text-warning">3. Action Sensitivity</h5>
+                                        <p class="card-text small">Quantifies the world model's responsiveness
+                                            to actions via the variational lower bound of mutual information
+                                            I(a<sub>t</sub>; z<sub>t+1</sub> | z<sub>t</sub>).</p>
+                                        <p class="small text-muted">I(a<sub>t</sub>; z<sub>t+1</sub>|z<sub>t</sub>) &ge; H(a<sub>t</sub>) + E[log q<sub>&phi;</sub>(a<sub>t</sub>|z<sub>t</sub>,z<sub>t+1</sub>)]</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- IGLS -->
+                <div class="card mb-4 bg-light">
+                    <div class="card-header"><h5 class="mb-0">Instruction-Grounded Latent Scorer (IGLS)</h5></div>
+                    <div class="card-body">
+                        <p>
+                            IGLS aligns language instructions (via MineCLIP text embeddings) with latent
+                            trajectories from ASLWM. By injecting action information through action-conditioned
+                            modulation, IGLS scores imagined trajectories against language goals, enabling
+                            instruction-following planning via CEM in the learned latent space.
+                        </p>
+                        <p class="text-center">
+                            <img src="images/placeholder-igls.png" width="80%" alt="IGLS Architecture" class="img-fluid border rounded">
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 6. Experiment 1: Long-Range Prediction -->
+        <div class="row justify-content-md-center mt-4" id="exp1">
+            <div class="col-md-10 col-lg-8">
+                <h3 class="mt-4 mb-3 section-heading">Experiment 1: Addressing Compounding Error</h3>
+                <p>
+                    We evaluate model variants on cumulative prediction error (MSE) over increasing rollout
+                    steps in Minecraft. The goal is to understand the effect of history context length,
+                    image resolution, rollout-based joint training, and VIDM on long-range prediction fidelity.
+                </p>
+
+                <!-- Model Variants Table -->
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover align-middle text-center">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>#</th>
+                                <th>Model Variant</th>
+                                <th>History ctx</th>
+                                <th>Resolution</th>
+                                <th>Rollout Loss</th>
+                                <th>IDM</th>
+                                <th>IDM Structured</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>1</td><td>LeWM-128-ctx3</td><td>3</td><td>128</td><td>&#10007;</td><td>&#10007;</td><td>&#10007;</td></tr>
+                            <tr><td>2</td><td>LeWM-128-ctx32</td><td>32</td><td>128</td><td>&#10007;</td><td>&#10007;</td><td>&#10007;</td></tr>
+                            <tr><td>3</td><td>LeWM-128-ctx32-rollout</td><td>32</td><td>128</td><td>&#10003;</td><td>&#10007;</td><td>&#10007;</td></tr>
+                            <tr><td>4</td><td>LeWM-256-ctx3-rollout</td><td>3</td><td>256</td><td>&#10003;</td><td>&#10007;</td><td>&#10007;</td></tr>
+                            <tr><td>5</td><td>ASLWM-128-ctx32-IDM (unstruct)</td><td>32</td><td>128</td><td>&#10003;</td><td>&#10003;</td><td>&#10007;</td></tr>
+                            <tr><td>6</td><td>ASLWM-128-ctx32-IDM (struct)</td><td>32</td><td>128</td><td>&#10003;</td><td>&#10003;</td><td>&#10003;</td></tr>
+                            <tr class="table-success"><td>7</td><td><strong>ASLWM-256-ctx32-IDM (struct)</strong></td><td>32</td><td>256</td><td>&#10003;</td><td>&#10003;</td><td>&#10003;</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Results Plot -->
+                <div class="card mb-4 bg-light">
+                    <div class="card-header"><h5 class="mb-0">Cumulative Error vs. Rollout Steps</h5></div>
+                    <div class="card-body">
+                        <p class="text-center">
+                            <img src="images/placeholder-exp1-plot.png" width="90%" alt="Cumulative MSE over rollout steps" class="img-fluid border rounded">
+                        </p>
+                        <p class="text-muted small text-center">
+                            Figure 2: Cumulative prediction error (MSE) over rollout horizon. ASLWM achieves
+                            0.15 at 32 steps vs. 0.9 for the original LeWM — a <strong>6&times; improvement</strong>.
+                            Models 1-4 (without action-sensitivity mechanisms) all exhibit rapid error accumulation,
+                            confirming that larger context and higher resolution alone do not solve the problem.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="alert alert-info">
+                    <strong>Key Finding:</strong> Simply increasing history context length or image resolution
+                    does <em>not</em> improve long-range prediction — it can even degrade it (Context Collapse).
+                    The combination of rollout-based joint training + structured VIDM + contrastive loss
+                    is necessary to achieve stable long-horizon rollouts (0.15 vs 0.90 cumulative error at 32 steps).
+                </div>
+            </div>
+        </div>
+
+        <!-- 7. Experiment 2: Planning -->
+        <div class="row justify-content-md-center mt-4" id="exp2">
+            <div class="col-md-10 col-lg-8">
+                <h3 class="mt-4 mb-3 section-heading">Experiment 2: Instruction-Goal Planning</h3>
+                <p>
+                    We evaluate ASLWM + IGLS on three Minecraft instruction-following tasks that require
+                    varying planning horizons. Success rate is the primary metric.
+                </p>
+
+                <!-- Tasks -->
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <div class="card h-100">
+                            <div class="card-header text-center fw-bold">Task 1: Mining Ore</div>
+                            <div class="card-body text-center">
+                                <img src="images/placeholder-task-mine.png" width="100%" alt="Mining Ore" class="img-fluid border rounded mb-2">
+                                <p class="small">Locate and mine specific ore blocks using appropriate tools.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="card h-100">
+                            <div class="card-header text-center fw-bold">Task 2: Placing Torches</div>
+                            <div class="card-body text-center">
+                                <img src="images/placeholder-task-torch.png" width="100%" alt="Placing Torches" class="img-fluid border rounded mb-2">
+                                <p class="small">Navigate dark areas and strategically place torches for illumination.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="card h-100">
+                            <div class="card-header text-center fw-bold">Task 3: Building Structures</div>
+                            <div class="card-body text-center">
+                                <img src="images/placeholder-task-build.png" width="100%" alt="Building Structures" class="img-fluid border rounded mb-2">
+                                <p class="small">Place blocks in specific arrangements to construct target structures.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Results Table -->
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover align-middle text-center">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>#</th>
+                                <th>Model</th>
+                                <th>Mining Ore</th>
+                                <th>Placing Torches</th>
+                                <th>Building Structures</th>
+                                <th>Avg.</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>1</td><td>LeWM-128-ctx3</td><td class="text-danger">—</td><td class="text-danger">—</td><td class="text-danger">—</td><td class="text-danger">—</td></tr>
+                            <tr><td>2</td><td>LeWM-128-ctx32</td><td class="text-danger">—</td><td class="text-danger">—</td><td class="text-danger">—</td><td class="text-danger">—</td></tr>
+                            <tr><td>3</td><td>ASLWM-128-ctx32-IDM (unstruct)</td><td class="text-warning">—</td><td class="text-warning">—</td><td class="text-warning">—</td><td class="text-warning">—</td></tr>
+                            <tr><td>4</td><td>ASLWM-128-ctx32-IDM (struct)</td><td class="text-success">—</td><td class="text-success">—</td><td class="text-success">—</td><td class="text-success">—</td></tr>
+                            <tr class="table-success"><td>5</td><td><strong>ASLWM-256-ctx32-IDM (struct)</strong></td><td class="text-success">—</td><td class="text-success">—</td><td class="text-success">—</td><td class="text-success">—</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p class="text-muted text-center small">
+                    Table: Success rates (%) on three planning tasks. "—" denotes placeholder for your experimental results.
+                </p>
+
+                <!-- Video Showcase -->
+                <div id="results" class="card mb-4 bg-light">
+                    <h5 class="card-header">Planning Rollout Videos</h5>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <p class="text-center fw-bold">Mining Ore</p>
+                                <video width="100%" preload="metadata" playsinline controls muted loop>
+                                    <source src="videos/placeholder-mine.mp4" type="video/mp4">
+                                </video>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <p class="text-center fw-bold">Placing Torches</p>
+                                <video width="100%" preload="metadata" playsinline controls muted loop>
+                                    <source src="videos/placeholder-torch.mp4" type="video/mp4">
+                                </video>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3 offset-md-3">
+                                <p class="text-center fw-bold">Building Structures</p>
+                                <video width="100%" preload="metadata" playsinline controls muted loop>
+                                    <source src="videos/placeholder-build.mp4" type="video/mp4">
+                                </video>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 8. Experiment 3: IDM / Action Sensitivity -->
+        <div class="row justify-content-md-center mt-4" id="exp3">
+            <div class="col-md-10 col-lg-8">
+                <h3 class="mt-4 mb-3 section-heading">Experiment 3: Action Sensitivity &amp; Inverse Dynamics</h3>
+                <p>
+                    ASLWM's action sensitivity ensures that the latent transition faithfully encodes action
+                    information, making the world model itself an effective Inverse Dynamics Model (IDM). We
+                    evaluate the quality of actions inferred by ASLWM across three visually diverse games,
+                    comparing action prediction accuracy and mouse regression error.
+                </p>
+
+                <!-- Games -->
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <div class="card h-100">
+                            <div class="card-header text-center fw-bold">CS2</div>
+                            <div class="card-body text-center">
+                                <img src="images/placeholder-cs2.png" width="100%" alt="CS2" class="img-fluid border rounded mb-2">
+                                <p class="small">First-person shooter with precise aim requirements.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="card h-100">
+                            <div class="card-header text-center fw-bold">GTA V</div>
+                            <div class="card-body text-center">
+                                <img src="images/placeholder-gta.png" width="100%" alt="GTA V" class="img-fluid border rounded mb-2">
+                                <p class="small">Open-world game with diverse driving and interaction mechanics.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="card h-100">
+                            <div class="card-header text-center fw-bold">Apex Legends</div>
+                            <div class="card-body text-center">
+                                <img src="images/placeholder-apex.png" width="100%" alt="Apex Legends" class="img-fluid border rounded mb-2">
+                                <p class="small">Fast-paced battle royale with complex movement patterns.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Results Table -->
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover align-middle text-center">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>Model</th>
+                                <th colspan="2">CS2</th>
+                                <th colspan="2">GTA V</th>
+                                <th colspan="2">Apex Legends</th>
+                            </tr>
+                            <tr>
+                                <th></th>
+                                <th>Action Acc. (%)</th><th>Mouse MSE &#8595;</th>
+                                <th>Action Acc. (%)</th><th>Mouse MSE &#8595;</th>
+                                <th>Action Acc. (%)</th><th>Mouse MSE &#8595;</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>LeWM (original)</td>
+                                <td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td>
+                            </tr>
+                            <tr class="table-success">
+                                <td><strong>ASLWM (ours)</strong></td>
+                                <td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p class="text-muted text-center small">
+                    Table: Action prediction accuracy and mouse regression error across three games.
+                    "—" denotes placeholder for experimental results.
+                </p>
+
+                <div class="alert alert-info">
+                    <strong>Key Finding:</strong> ASLWM's VIDM component is not a standalone module — it is
+                    an integral part of world model training. The action sensitivity property means the
+                    world model itself can serve as an IDM, generating pseudo action labels from unlabeled
+                    egocentric video, enabling a viable path for data self-expansion in embodied agent research.
+                </div>
+            </div>
+        </div>
+
+        <!-- 9. Contributions -->
+        <div class="row justify-content-md-center mt-4" id="contributions">
+            <div class="col-md-10 col-lg-8">
+                <h3 class="mt-4 mb-3 section-heading">Contributions</h3>
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <div class="card h-100 border-primary">
+                            <div class="card-body">
+                                <h5 class="card-title text-primary">1. ASLWM Framework</h5>
+                                <p class="card-text small">We systematically address the compounding error
+                                    problem in latent world models. We identify the <em>Context Collapse</em>
+                                    phenomenon and reduce 32-step cumulative error from 0.9 to 0.15
+                                    (6&times; improvement) through contrastive loss + VIDM co-design.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="card h-100 border-success">
+                            <div class="card-body">
+                                <h5 class="card-title text-success">2. Lightweight Planning</h5>
+                                <p class="card-text small">ASLWM + IGLS (&lt;100M params total, 20&times;
+                                    smaller than mainstream VLAs) achieves competitive instruction-following
+                                    performance with millisecond-level latency on consumer GPUs, meeting
+                                    real-time game deployment requirements.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="card h-100 border-warning">
+                            <div class="card-body">
+                                <h5 class="card-title text-warning">3. Built-in IDM</h5>
+                                <p class="card-text small">Action sensitivity ensures the world model is
+                                    inherently an IDM, capable of generating high-quality pseudo action labels
+                                    from unlabeled egocentric video — a path toward data self-expansion
+                                    for embodied agent research.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 10. BibTeX -->
+        <div class="row justify-content-md-center mt-4" id="bibtex">
+            <div class="col-md-10 col-lg-8">
+                <h3 class="mt-4 mb-3 section-heading">BibTeX</h3>
+                <div class="card bg-light">
+                    <div class="card-body position-relative">
+                        <button class="btn btn-sm btn-outline-secondary position-absolute top-0 end-0 m-3" id="copyBibtex" data-clipboard-target="#bibtexContent">
+                            Copy
+                        </button>
+                        <pre class="bg-dark text-light p-3 rounded" style="overflow-x: auto;"><code id="bibtexContent">@article{author2026aslwm,
+  title   = {Action-Sensitive Latent World Model:
+             Faithful Action-Conditioned Rollouts for Long-Horizon Planning},
+  author  = {Author 1 and Author 2 and Author 3 and Author 4 and Author 5},
+  journal = {arXiv preprint arXiv:XXXX.XXXXX},
+  year    = {2026}
+}</code></pre>
+                    </div>
+                </div>
+                <p class="text-muted small mt-2">
+                    If you find our work useful, please consider citing us. The full citation will be updated upon publication.
+                </p>
+            </div>
+        </div>
+
+        <!-- 11. Footer -->
+        <div class="row justify-content-md-center mt-5 mb-4">
+            <div class="col-md-10 col-lg-8 text-center">
+                <hr>
+                <p class="text-muted small">
+                    &copy; 2026 ASLWM Team. Built with <a href="https://getbootstrap.com/">Bootstrap 5</a>.
+                    Source code available on <a href="#">GitHub</a>.
+                </p>
+            </div>
+        </div>
+
+    </div><!-- /container -->
+
+    <!-- Back to Top -->
+    <button id="backToTop" class="btn btn-primary position-fixed bottom-0 end-0 m-4 d-none" title="Back to top">
+        &#8593;
+    </button>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+</body>
+</html>

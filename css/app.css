@@ -1,0 +1,189 @@
+/* ============================================================
+   ASLWM Project Page — Custom Styles
+   ============================================================ */
+
+/* --- Color Variables --- */
+:root {
+    --aslwm-primary: #2d7d46;    /* Minecraft-inspired green */
+    --aslwm-accent: #1a6b9c;     /* Blue accent */
+    --aslwm-dark: #1a1a2e;
+    --aslwm-light: #f8f9fa;
+}
+
+/* --- Typography --- */
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+                 "Helvetica Neue", Arial, sans-serif;
+    color: #333;
+    line-height: 1.7;
+    scroll-behavior: smooth;
+}
+
+h1, h2, h3, h4, h5 {
+    color: var(--aslwm-dark);
+}
+
+/* --- Section Headings --- */
+.section-heading {
+    padding-bottom: 0.5rem;
+    border-bottom: 3px solid var(--aslwm-primary);
+    display: inline-block;
+}
+
+/* --- Navbar --- */
+.navbar-brand {
+    color: var(--aslwm-primary) !important;
+    font-size: 1.3rem;
+    letter-spacing: 0.5px;
+}
+
+.nav-link {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #555 !important;
+    transition: color 0.2s;
+}
+
+.nav-link:hover {
+    color: var(--aslwm-primary) !important;
+}
+
+/* --- Author List --- */
+.authors .list-inline-item {
+    margin-right: 0.8rem;
+    font-size: 1.05rem;
+}
+
+.authors .list-inline-item a {
+    color: var(--aslwm-accent);
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.authors .list-inline-item a:hover {
+    text-decoration: underline;
+    color: var(--aslwm-primary);
+}
+
+/* --- Links Bar --- */
+.links-bar .col-md-2 a:hover img {
+    transform: translateY(-3px);
+    transition: transform 0.2s ease;
+}
+
+/* --- Cards --- */
+.card {
+    border-radius: 8px;
+    transition: box-shadow 0.2s ease;
+}
+
+.card:hover {
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+}
+
+.card-header {
+    font-weight: 600;
+}
+
+/* --- Tables --- */
+.table th {
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.table td {
+    font-size: 0.9rem;
+}
+
+/* --- Video Placeholder --- */
+video {
+    border-radius: 6px;
+    background: #000;
+}
+
+/* --- Alerts --- */
+.alert-info {
+    background-color: #e8f4f8;
+    border-color: #b8d8e8;
+    color: #1a4a5a;
+}
+
+/* --- BibTeX --- */
+#bibtexContent {
+    font-size: 0.85rem;
+    font-family: "SF Mono", "Fira Code", "Fira Mono", "Roboto Mono", monospace;
+}
+
+#copyBibtex {
+    z-index: 10;
+}
+
+/* --- Back to Top --- */
+#backToTop {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.8;
+    transition: opacity 0.3s;
+    background-color: var(--aslwm-primary);
+    border-color: var(--aslwm-primary);
+}
+
+#backToTop:hover {
+    opacity: 1;
+}
+
+/* --- Image Placeholders --- */
+img[src*="placeholder"] {
+    background: linear-gradient(135deg, #e8e8e8 0%, #f5f5f5 50%, #e8e8e8 100%);
+    min-height: 200px;
+    object-fit: contain;
+}
+
+/* --- Fade-in Animation --- */
+.fade-in {
+    animation: fadeIn 0.6s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+/* --- Responsive --- */
+@media (max-width: 768px) {
+    h1 {
+        font-size: 1.8rem !important;
+    }
+
+    h3 {
+        font-size: 1.3rem;
+    }
+
+    .authors .list-inline-item {
+        display: block;
+        margin-bottom: 0.3rem;
+    }
+
+    .table {
+        font-size: 0.75rem;
+    }
+
+    .navbar-nav {
+        text-align: center;
+    }
+}
+
+@media (max-width: 576px) {
+    h1 {
+        font-size: 1.5rem !important;
+    }
+
+    .col-md-2.text-center h5 {
+        font-size: 0.85rem;
+    }
+}

@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="450" viewBox="0 0 900 450">
+  <rect width="900" height="450" fill="#fff"/>
+  <rect x="1" y="1" width="898" height="448" fill="none" stroke="#ddd" stroke-width="2" stroke-dasharray="8,4" rx="8"/>
+  <!-- Axes -->
+  <line x1="100" y1="350" x2="820" y2="350" stroke="#333" stroke-width="2"/>
+  <line x1="100" y1="350" x2="100" y2="50" stroke="#333" stroke-width="2"/>
+  <text x="460" y="390" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" fill="#333">Rollout Steps</text>
+  <text x="30" y="200" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" fill="#333" transform="rotate(-90 30 200)">Cumulative MSE</text>
+  <!-- Curves -->
+  <path d="M100,340 Q200,280 300,230 Q400,180 500,150 Q600,130 700,120 Q780,115 820,110" fill="none" stroke="#2d7d46" stroke-width="3"/>
+  <text x="830" y="112" font-family="Arial, sans-serif" font-size="13" fill="#2d7d46" font-weight="bold">ASLWM (0.15)</text>
+  <path d="M100,340 Q150,200 200,120 Q250,90 300,70 Q400,55 500,50 Q650,45 820,40" fill="none" stroke="#e74c3c" stroke-width="2" stroke-dasharray="6,3"/>
+  <text x="830" y="42" font-family="Arial, sans-serif" font-size="13" fill="#e74c3c">LeWM (0.90)</text>
+  <text x="400" y="280" text-anchor="middle" font-family="Arial, sans-serif" font-size="13" fill="#bbb">[Replace with actual experimental plot]</text>
+</svg>

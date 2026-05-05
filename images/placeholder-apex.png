@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="250" viewBox="0 0 400 250">
+  <rect width="400" height="250" fill="#2e1a1a"/>
+  <rect x="1" y="1" width="398" height="248" fill="none" stroke="#444" stroke-width="2" stroke-dasharray="6,3" rx="8"/>
+  <text x="200" y="115" text-anchor="middle" font-family="Arial, sans-serif" font-size="20" fill="#e74c3c" font-weight="bold">Apex Legends</text>
+  <text x="200" y="145" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#888">[Game screenshot]</text>
+</svg>

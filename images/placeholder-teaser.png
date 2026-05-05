@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="400" viewBox="0 0 800 400">
+  <rect width="800" height="400" fill="#f8f8f8"/>
+  <rect x="1" y="1" width="798" height="398" fill="none" stroke="#ccc" stroke-width="2" stroke-dasharray="8,4" rx="8"/>
+  <text x="400" y="180" text-anchor="middle" font-family="Arial, sans-serif" font-size="22" fill="#999" font-weight="bold">Teaser Figure</text>
+  <text x="400" y="215" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" fill="#bbb">[Replace with your teaser / key figure]</text>
+  <text x="400" y="240" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#ccc">Recommended: 1000 x 500+ px</text>
+</svg>

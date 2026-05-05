@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="500" viewBox="0 0 1200 500">
+  <rect width="1200" height="500" fill="#f0f4f0"/>
+  <rect x="1" y="1" width="1198" height="498" fill="none" stroke="#2d7d46" stroke-width="2" stroke-dasharray="8,4" rx="12"/>
+  <text x="600" y="200" text-anchor="middle" font-family="Arial, sans-serif" font-size="28" fill="#2d7d46" font-weight="bold">ASLWM Architecture Overview</text>
+  <text x="600" y="250" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" fill="#666">[Replace with your architecture diagram]</text>
+  <text x="600" y="280" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" fill="#999">Recommended size: 1200 x 500 px or wider</text>
+  <rect x="150" y="320" width="200" height="60" rx="8" fill="#2d7d46" opacity="0.15"/>
+  <text x="250" y="357" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" fill="#2d7d46">Encoder (JEPA)</text>
+  <rect x="500" y="320" width="200" height="60" rx="8" fill="#1a6b9c" opacity="0.15"/>
+  <text x="600" y="357" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" fill="#1a6b9c">Latent Dynamics</text>
+  <rect x="850" y="320" width="200" height="60" rx="8" fill="#e67e22" opacity="0.15"/>
+  <text x="950" y="357" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" fill="#e67e22">Decoder</text>
+  <line x1="350" y1="350" x2="500" y2="350" stroke="#999" stroke-width="2" marker-end="url(#arrow)"/>
+  <line x1="700" y1="350" x2="850" y2="350" stroke="#999" stroke-width="2" marker-end="url(#arrow)"/>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#999"/>
+    </marker>
+  </defs>
+</svg>
