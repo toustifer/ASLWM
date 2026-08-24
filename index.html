@@ -175,6 +175,12 @@
                         <p class="small text-muted">
                             ActSWM inherits JEPA / LeWM representation-space prediction, then adds rollout-level separation and a non-adaptive action constraint inspired by inverse-dynamics ideas (e.g., WAM) while avoiding joint encoder–readout co-adaptation.
                         </p>
+                        <p class="text-center mb-3">
+                            <img src="images/paper_framework.png" width="100%" alt="ActSWM overview from the paper" class="img-fluid border rounded">
+                        </p>
+                        <p class="mb-0 text-muted small text-center">
+                            Figure 1 (paper): Overview of ActSWM — from context collapse to action-sensitive latent rollouts, planning, and cross-game action recovery.
+                        </p>
                         <div class="row">
                             <div class="col-md-4 mb-3">
                                 <div class="card h-100 border-primary">
@@ -248,6 +254,16 @@
                 <p class="text-muted text-center small">
                     ActSWM preserves a much larger action gap than LeWM variants while maintaining strong rollout quality under long contexts.
                 </p>
+                <div class="row mt-3">
+                    <div class="col-md-6 mb-3">
+                        <img src="images/step_drift_cosine.png" width="100%" alt="Step-drift cosine similarity" class="img-fluid border rounded">
+                        <p class="text-muted text-center small mt-1 mb-0">Future-state cosine similarity across rollout steps.</p>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <img src="images/step_drift_action_gap.png" width="100%" alt="Step-drift action gap" class="img-fluid border rounded">
+                        <p class="text-muted text-center small mt-1 mb-0">Action gap — separability between recorded- and alternative-action rollouts.</p>
+                    </div>
+                </div>
                 <div class="alert alert-info takeaway-box">
                     <strong>Takeaway:</strong> ActSWM improves long-horizon planning usefulness by fixing action-insensitive rollouts, not merely by increasing prediction fidelity.
                 </div>
@@ -266,6 +282,12 @@
                 </p>
                 <p class="text-muted text-center small">
                     Torch placement is nearly saturated, while stone mining and pillar building show the clearest gains from more reliable action-conditioned rollouts.
+                </p>
+                <p class="text-center mt-3">
+                    <img src="images/planning_by_task.png" width="85%" alt="Planning success by task" class="img-fluid border rounded">
+                </p>
+                <p class="text-muted text-center small">
+                    Success-rate breakdown per task: ActSWM leads on every task, with the largest margins where action sequences matter most.
                 </p>
                 <div class="table-responsive mb-4">
                     <table class="table table-bordered table-hover align-middle text-center">
@@ -338,6 +360,9 @@
                     Game-agent lines such as VPT, STEVE-1, MineDojo, and Voyager show the value of large-scale gameplay supervision, but trainable action-aligned data still requires substantial systems work.
                     For ActSWM, the pipelines fall into two regimes: GTA V and Apex Legends share a public-video acquisition scaffold with discovery, download, scene segmentation, filtering, and export, while CS2 uses a replay-driven, high-control POV capture system. Together they support world-model training, inverse-dynamics supervision, and cross-game evaluation without treating all games as the same data source.
                 </p>
+                <p class="text-center mb-4">
+                    <img src="images/multi_track_pipeline.png" width="100%" alt="Multi-track game data construction framework" class="img-fluid border rounded">
+                </p>
 
                 <div class="table-responsive mb-4">
                     <table class="table table-bordered table-hover align-middle text-center pipeline-overview-table">
@@ -382,7 +407,6 @@
 
                 <div class="pipeline-block mb-5">
                     <h5 class="fw-bold">GTA V Pipeline</h5>
-                    <img src="images/pipeline-gta.gif" alt="GTA V pipeline demo" class="img-fluid border rounded pipeline-gif mb-3">
                     <p><strong>Goal:</strong> Build a large clean clip corpus from public GTA V gameplay videos for IDM and world-model training.</p>
                     <p><strong>Pipeline:</strong> The system discovers candidates from keyword search and trusted seed URLs, downloads videos at constrained resolution, applies PySceneDetect-based scene segmentation, and runs four lightweight frame-level detectors before policy-level clip decisions.</p>
                     <p><strong>Why it matters:</strong> GTA is the reference public-video pipeline: a blacklist strategy explicitly enumerates bad content such as death screens, menu / shop views, loading screens, and low-motion clips, then exports only the retained segments with manifest-backed resumability.</p>
@@ -390,7 +414,6 @@
 
                 <div class="pipeline-block mb-5">
                     <h5 class="fw-bold">Apex Legends Pipeline</h5>
-                    <img src="images/pipeline-apex.gif" alt="Apex Legends pipeline demo" class="img-fluid border rounded pipeline-gif mb-3">
                     <p><strong>Goal:</strong> Mine combat-valid Apex gameplay from public videos while preserving short, rapid, high-action segments.</p>
                     <p><strong>Pipeline:</strong> Apex reuses the GTA acquisition scaffold — multi-language discovery, download, and scene segmentation — but replaces blacklist filtering with a primary <em>hud_gameplay</em> detector plus loading-screen rejection.</p>
                     <p><strong>Why it matters:</strong> The filtering philosophy is reversed: instead of enumerating bad frames, the pipeline positively confirms gameplay through combat HUD cues (template matching over ammo, squads-left, compass, and direction markers, with heuristic fallback when templates are insufficient). This avoids discarding true combat clips just because motion-based rules fail under fast camera changes.</p>
@@ -398,7 +421,6 @@
 
                 <div class="pipeline-block mb-4">
                     <h5 class="fw-bold">CS2 Pipeline</h5>
-                    <img src="images/pipeline-cs2.gif" alt="CS2 pipeline demo" class="img-fluid border rounded pipeline-gif mb-3">
                     <p><strong>Goal:</strong> Collect controlled first-person competitive footage directly from replay demos rather than scrape uncontrolled public videos.</p>
                     <p><strong>Pipeline:</strong> The system parses CS2 demos, launches the game through HLAE-style hooks, issues tick-level replay commands through a demo-control plugin, captures per-player POV streams with Windows Graphics Capture, and encodes the result into per-round video outputs.</p>
                     <p><strong>Why it matters:</strong> CS2 is fundamentally a high-control capture stack, not a public-video cleaning line. It yields reproducible per-player, per-round recordings that can later be aligned into downstream supervision and pseudo-labeling workflows.</p>
