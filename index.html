@@ -3,28 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>ASLWM: Action-Sensitive Latent World Model</title>
-    <link rel="icon" type="image/x-icon" href="images/favicon.ico">
-    <meta name="description" content="Action-Sensitive Latent World Model (ASLWM): Faithful Action-Conditioned Rollouts for Long-Horizon Planning">
+    <title>ActSWM: Action-Sensitive World Models for Long-Horizon Planning in Open-World Games</title>
+    <meta name="description" content="ActSWM: Action-Sensitive World Models for Long-Horizon Planning in Open-World Games">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- Open Graph -->
-    <meta property="og:image" content="images/placeholder-arch.png">
+    <meta property="og:image" content="images/step_drift_two_panel.png">
     <meta property="og:image:type" content="image/png">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="">
-    <meta property="og:title" content="ASLWM: Action-Sensitive Latent World Model">
-    <meta property="og:description" content="Faithful Action-Conditioned Rollouts for Long-Horizon Planning">
+    <meta property="og:url" content="https://arxiv.org/abs/2607.26712">
+    <meta property="og:title" content="ActSWM: Action-Sensitive World Models for Long-Horizon Planning in Open-World Games">
+    <meta property="og:description" content="Action-sensitive latent rollouts for long-horizon planning, cross-game action recovery, and scalable pseudo-labeling.">
 
-    <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="ASLWM: Action-Sensitive Latent World Model">
-    <meta name="twitter:description" content="Faithful Action-Conditioned Rollouts for Long-Horizon Planning">
-    <meta name="twitter:image" content="images/placeholder-arch.png">
+    <meta name="twitter:title" content="ActSWM: Action-Sensitive World Models for Long-Horizon Planning in Open-World Games">
+    <meta name="twitter:description" content="Action-sensitive latent rollouts for long-horizon planning, cross-game action recovery, and scalable pseudo-labeling.">
+    <meta name="twitter:image" content="images/step_drift_two_panel.png">
 
-    <!-- Bootstrap 5 -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.8.0/codemirror.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/default.min.css">
@@ -37,10 +33,9 @@
     <script src="js/app.js"></script>
 </head>
 <body>
-    <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top border-bottom">
         <div class="container">
-            <a class="navbar-brand fw-bold" href="#">ASLWM</a>
+            <a class="navbar-brand fw-bold" href="#top">ActSWM</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -51,6 +46,7 @@
                     <li class="nav-item"><a class="nav-link" href="#exp1">Exp.1</a></li>
                     <li class="nav-item"><a class="nav-link" href="#exp2">Exp.2</a></li>
                     <li class="nav-item"><a class="nav-link" href="#exp3">Exp.3</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#pipelines">Pipelines</a></li>
                     <li class="nav-item"><a class="nav-link" href="#bibtex">BibTeX</a></li>
                 </ul>
             </div>
@@ -58,220 +54,172 @@
     </nav>
 
     <div class="container" id="main">
-
-        <!-- 1. Header: Title + Authors -->
-        <div class="row mt-5">
+        <div class="row mt-5" id="top">
             <div class="col-md-12 text-center">
-                <h1 class="fw-bold" style="font-size: 2.8rem;">
-                    Action-Sensitive Latent World Model
-                </h1>
-                <h3 class="text-muted mt-2">
-                    Faithful Action-Conditioned Rollouts for Long-Horizon Planning
+                <p class="eyebrow text-uppercase mb-2">arXiv: 2607.26712</p>
+                <h1 class="fw-bold hero-title">ActSWM: Action-Sensitive World Models for Long-Horizon Planning in Open-World Games</h1>
+                <h3 class="text-muted mt-3 hero-subtitle">
+                    Action-sensitive latent rollouts for long-horizon planning, cross-game action recovery, and scalable pseudo-labeling.
                 </h3>
             </div>
         </div>
 
         <div class="row mt-3">
             <div class="col-md-12 text-center">
-                <ul class="list-inline authors">
-                    <li class="list-inline-item"><a href="#" target="_blank">Author 1</a><sup>*</sup></li>
-                    <li class="list-inline-item"><a href="#" target="_blank">Author 2</a><sup>*</sup></li>
-                    <li class="list-inline-item"><a href="#" target="_blank">Author 3</a></li>
-                    <li class="list-inline-item"><a href="#" target="_blank">Author 4</a></li>
-                    <li class="list-inline-item"><a href="#" target="_blank">Author 5</a></li>
+                <ul class="list-inline authors mb-3">
+                    <li class="list-inline-item">Zhenfeng Gan</li>
+                    <li class="list-inline-item">ZiTong Zeng</li>
+                    <li class="list-inline-item">Jiajun Cheng</li>
+                    <li class="list-inline-item">Yeke Song</li>
+                    <li class="list-inline-item">Yongyi Tang</li>
+                    <li class="list-inline-item">Xueqian Wang</li>
                 </ul>
-                <p class="text-muted"><sup>*</sup>Equal contribution</p>
-                <p>
-                    <a href="#" class="text-decoration-none">
-                        <span class="fw-bold text-dark">Your Institution / Team</span>
-                    </a>
+                <p class="hero-summary mx-auto mb-0">
+                    ActSWM identifies <strong>Context Collapse</strong> in JEPA-style latent world models and preserves action-conditioned rollout separation for long-horizon planning.
                 </p>
             </div>
         </div>
 
-        <!-- 2. Links Bar -->
-        <div class="row justify-content-md-center mt-4">
+        <div class="row justify-content-md-center mt-4 links-bar">
             <div class="col-md-2 text-center">
-                <a href="#" class="text-decoration-none">
-                    <img src="images/icons/paper.svg" height="50px" alt="Paper" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2250%22 height=%2250%22><rect width=%2250%22 height=%2250%22 fill=%22%23ddd%22 rx=%228%22/><text x=%2225%22 y=%2232%22 text-anchor=%22middle%22 font-size=%2220%22>📄</text></svg>'">
+                <a href="https://arxiv.org/abs/2607.26712" target="_blank" rel="noopener" class="text-decoration-none">
+                    <img src="images/icons/paper.svg" height="50" alt="Paper">
                     <h5 class="mt-1"><strong>Paper</strong></h5>
                 </a>
             </div>
             <div class="col-md-2 text-center">
-                <a href="#" class="text-decoration-none">
-                    <img src="images/icons/github.svg" height="50px" alt="Code" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2250%22 height=%2250%22><rect width=%2250%22 height=%2250%22 fill=%22%23ddd%22 rx=%228%22/><text x=%2225%22 y=%2232%22 text-anchor=%22middle%22 font-size=%2220%22>💻</text></svg>'">
+                <a href="https://arxiv.org/pdf/2607.26712" target="_blank" rel="noopener" class="text-decoration-none">
+                    <img src="images/icons/pdf.svg" height="50" alt="PDF">
+                    <h5 class="mt-1"><strong>PDF</strong></h5>
+                </a>
+            </div>
+            <div class="col-md-2 text-center">
+                <a href="https://github.com/KeithBlackmore/ActsWM" target="_blank" class="text-decoration-none">
+                    <img src="images/icons/github.svg" height="50" alt="Code">
                     <h5 class="mt-1"><strong>Code</strong></h5>
                 </a>
             </div>
             <div class="col-md-2 text-center">
-                <a href="#results" class="text-decoration-none">
-                    <img src="images/icons/video.svg" height="50px" alt="Video" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2250%22 height=%2250%22><rect width=%2250%22 height=%2250%22 fill=%22%23ddd%22 rx=%228%22/><text x=%2225%22 y=%2232%22 text-anchor=%22middle%22 font-size=%2220%22>🎬</text></svg>'">
-                    <h5 class="mt-1"><strong>Video</strong></h5>
+                <a href="#exp2" class="text-decoration-none">
+                    <img src="images/icons/video.svg" height="50" alt="Results">
+                    <h5 class="mt-1"><strong>Results</strong></h5>
                 </a>
             </div>
             <div class="col-md-2 text-center">
-                <a href="#" class="text-decoration-none">
-                    <img src="images/icons/data.svg" height="50px" alt="Dataset" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2250%22 height=%2250%22><rect width=%2250%22 height=%2250%22 fill=%22%23ddd%22 rx=%228%22/><text x=%2225%22 y=%2232%22 text-anchor=%22middle%22 font-size=%2220%22>📊</text></svg>'">
-                    <h5 class="mt-1"><strong>Dataset</strong></h5>
+                <a href="#pipelines" class="text-decoration-none">
+                    <img src="images/icons/data.svg" height="50" alt="Pipelines">
+                    <h5 class="mt-1"><strong>Pipelines</strong></h5>
                 </a>
             </div>
             <div class="col-md-2 text-center">
-                <a href="#" class="text-decoration-none">
-                    <img src="images/icons/model.svg" height="50px" alt="Model" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2250%22 height=%2250%22><rect width=%2250%22 height=%2250%22 fill=%22%23ddd%22 rx=%228%22/><text x=%2225%22 y=%2232%22 text-anchor=%22middle%22 font-size=%2220%22>🧠</text></svg>'">
-                    <h5 class="mt-1"><strong>Model</strong></h5>
+                <a href="#bibtex" class="text-decoration-none">
+                    <img src="images/icons/model.svg" height="50" alt="Citation">
+                    <h5 class="mt-1"><strong>Citation</strong></h5>
                 </a>
             </div>
         </div>
 
-        <!-- 3. Architecture Diagram -->
-        <div class="row justify-content-md-center mt-5">
-            <div class="col-md-10 col-lg-8">
-                <p class="text-center">
-                    <img src="images/placeholder-arch.png" width="100%" alt="ASLWM Architecture Overview" class="img-fluid border rounded">
-                </p>
-                <p class="text-center text-muted fst-italic">
-                    Figure 1: Overview of the Action-Sensitive Latent World Model (ASLWM) framework.
-                    Three synergistic components: Contrastive Next-State Prediction Loss, Variational Inverse
-                    Dynamics Model (VIDM), and Action Sensitivity Metric ensure faithful action-conditioned
-                    rollouts over long horizons.
-                </p>
+        <div class="row justify-content-md-center mt-5 hero-result-row">
+            <div class="col-md-10 col-lg-9">
+                <div class="hero-result-card">
+                    <img src="images/step_drift_two_panel.png" width="100%" alt="ActSWM step-drift comparison" class="img-fluid border rounded">
+                    <p class="text-muted text-center small mt-3 mb-0">
+                        ActSWM preserves action-conditioned rollout separation under long horizons, avoiding the action-insensitive collapse seen in stronger-context LeWM baselines.
+                    </p>
+                </div>
             </div>
         </div>
 
-        <!-- 4. Abstract -->
         <div class="row justify-content-md-center mt-4" id="abstract">
             <div class="col-md-10 col-lg-8">
                 <h3 class="mt-4 mb-3 section-heading">Abstract</h3>
-                <p class="text-justify">
-                    Building generalist agents that can autonomously perceive, reason, and act in open-world
-                    environments is a long-standing goal of AI research. While Vision-Language-Action (VLA)
-                    models have shown impressive results in game playing, they face three fundamental challenges:
-                    <strong>low sample efficiency</strong> (requiring hundreds of billions of pretraining tokens),
-                    <strong>prohibitive deployment cost</strong> (multi-billion parameter models with inference
-                    latency exceeding acceptable thresholds for real-time games), and
-                    <strong>weak long-horizon decision-making</strong> due to causal confusion and sparse rewards.
+                <p>
+                    Latent world models such as Dreamer, TD-MPC, and JEPA-style predictors enable efficient planning by optimizing future controls in representation space.
+                    Yet prediction accuracy alone does not guarantee that planned actions still change imagined futures in a useful way.
+                    We identify <strong>Context Collapse</strong>: with stronger visual context, autoregressive latent predictors can keep high future-state similarity while becoming nearly invariant to different action sequences.
                 </p>
-                <p class="text-justify">
-                    World Model-based Planning offers a principled alternative by learning environment dynamics
-                    and performing look-ahead search in latent space. However, all latent world models face a
-                    critical challenge: <strong>compounding error</strong> — small per-step prediction shifts
-                    accumulate over rollout length, causing imagined trajectories to diverge from reality. We
-                    identify a more insidious phenomenon we term <strong>Context Collapse</strong>: increasing
-                    the history context window to mitigate compounding error paradoxically causes the model to
-                    degenerate into a "video generation" mode where action signals are progressively ignored.
+                <p>
+                    <strong>ActSWM</strong> builds on LeWM-style representation-space prediction, but treats action sensitivity as a geometric constraint rather than an auxiliary readout.
+                    Unlike joint inverse-dynamics objectives that can co-adapt with the encoder, ActSWM couples rollout separation pressure with a <em>fixed</em> inverse-dynamics constraint so alternative-action futures stay distinguishable over long horizons.
                 </p>
-                <p class="text-justify">
-                    We propose the <strong>Action-Sensitive Latent World Model (ASLWM)</strong>, a framework
-                    that ensures latent dynamics faithfully respond to action signals at arbitrary rollout depths.
-                    ASLWM combines three synergistic components: (1) a <strong>contrastive next-state prediction
-                    loss</strong> that directly supervises action sensitivity, (2) a <strong>Variational Inverse
-                    Dynamics Model (VIDM)</strong> that forces the encoder to encode action-relevant information
-                    via an information bottleneck, and (3) an <strong>action sensitivity metric</strong> based
-                    on a variational lower bound of mutual information. We additionally propose the
-                    <strong>Instruction-Grounded Latent Scorer (IGLS)</strong>, a lightweight cross-modal
-                    alignment model (&lt;100M params) that aligns language instructions with latent trajectories,
-                    enabling instruction-goal planning at millisecond-level latency on consumer GPUs.
-                </p>
-                <p class="text-center mt-3">
-                    <img src="images/placeholder-teaser.png" width="85%" alt="Teaser" class="img-fluid border rounded">
+                <p>
+                    Across step-drift diagnosis on VPT Minecraft trajectories, closed-loop MineStudio planning, and cross-game local action recovery against D2E G-IDM, ActSWM preserves larger action gaps, improves multi-step task success, and supports scalable action pseudo-labeling from unlabeled gameplay videos.
                 </p>
             </div>
         </div>
 
-        <!-- 5. Method Overview -->
         <div class="row justify-content-md-center mt-4" id="method">
             <div class="col-md-10 col-lg-8">
                 <h3 class="mt-4 mb-3 section-heading">Method</h3>
 
-                <!-- Context Collapse -->
                 <div class="card mb-4 bg-light">
-                    <div class="card-header"><h5 class="mb-0">The Context Collapse Phenomenon</h5></div>
+                    <div class="card-header"><h5 class="mb-0">Context Collapse</h5></div>
                     <div class="card-body">
                         <p>
-                            When the history context window is enlarged to anchor long-range predictions,
-                            the world model degenerates into a <em>sequence-to-latent</em> mode — it
-                            extrapolates future frames from historical patterns while increasingly ignoring
-                            injected action signals. This fundamentally undermines the model's utility as a
-                            planning tool, which critically depends on faithful action conditioning.
+                            Prior latent planners (PlaNet, Dreamer, TD-MPC, LeWM) largely optimize future-state fidelity.
+                            Longer context or multi-step rollout losses can reduce compounding error, but they do not automatically keep action conditioning alive:
+                            the predictor may extrapolate state progression from visual history while becoming insensitive to candidate controls.
                         </p>
-                        <p class="text-center">
-                            <img src="images/placeholder-context-collapse.png" width="80%" alt="Context Collapse Illustration" class="img-fluid border rounded">
+                        <p>
+                            This is distinct from classic exposure bias. For planning, it is deeper: if ground-truth-action and alternative-action rollouts collapse together, CEM-style planners cannot compare downstream consequences of different action sequences.
+                        </p>
+                        <p class="text-center mb-0">
+                            <img src="images/step_drift_action_sensitivity.png" width="80%" alt="Action sensitivity under long context" class="img-fluid border rounded">
                         </p>
                     </div>
                 </div>
 
-                <!-- Three Components -->
                 <div class="card mb-4 bg-light">
-                    <div class="card-header"><h5 class="mb-0">Three Synergistic Components</h5></div>
+                    <div class="card-header"><h5 class="mb-0">ActSWM Design</h5></div>
                     <div class="card-body">
+                        <p class="small text-muted">
+                            ActSWM inherits JEPA / LeWM representation-space prediction, then adds rollout-level separation and a non-adaptive action constraint inspired by inverse-dynamics ideas (e.g., WAM) while avoiding joint encoder–readout co-adaptation.
+                        </p>
                         <div class="row">
                             <div class="col-md-4 mb-3">
                                 <div class="card h-100 border-primary">
                                     <div class="card-body text-center">
-                                        <h5 class="card-title text-primary">1. Contrastive Loss</h5>
-                                        <p class="card-text small">Directly supervises action sensitivity by
-                                            enforcing that predictions using the correct action are closer to the
-                                            true next state than predictions using incorrect actions.</p>
-                                        <p class="small text-muted">&#8466;<sub>contrast</sub> = max(0, d(z<sub>true</sub>, &#382;<sub>correct</sub>) &minus; d(z<sub>true</sub>, &#382;<sub>wrong</sub>) + m)</p>
+                                        <h5 class="card-title text-primary">1. Prediction Backbone</h5>
+                                        <p class="card-text small">A JEPA-style latent predictor (LeWM lineage) forecasts future representations in action-conditioned latent space rather than pixels.</p>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-4 mb-3">
                                 <div class="card h-100 border-success">
                                     <div class="card-body text-center">
-                                        <h5 class="card-title text-success">2. VIDM</h5>
-                                        <p class="card-text small">Variational Inverse Dynamics Model constrains
-                                            the encoder via an information bottleneck, ensuring action-relevant
-                                            information is preserved in the latent representation.</p>
-                                        <p class="small text-muted">&#8466;<sub>VIDM</sub> = &minus;I(Z; A) + &beta; &middot; I(Z; X)</p>
+                                        <h5 class="card-title text-success">2. Rollout Separation</h5>
+                                        <p class="card-text small">A hinge-style separation loss keeps true-action and alternative-action futures distinguishable across multi-step rollouts.</p>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-4 mb-3">
                                 <div class="card h-100 border-warning">
                                     <div class="card-body text-center">
-                                        <h5 class="card-title text-warning">3. Action Sensitivity</h5>
-                                        <p class="card-text small">Quantifies the world model's responsiveness
-                                            to actions via the variational lower bound of mutual information
-                                            I(a<sub>t</sub>; z<sub>t+1</sub> | z<sub>t</sub>).</p>
-                                        <p class="small text-muted">I(a<sub>t</sub>; z<sub>t+1</sub>|z<sub>t</sub>) &ge; H(a<sub>t</sub>) + E[log q<sub>&phi;</sub>(a<sub>t</sub>|z<sub>t</sub>,z<sub>t+1</sub>)]</p>
+                                        <h5 class="card-title text-warning">3. Fixed IDM Constraint</h5>
+                                        <p class="card-text small">A frozen inverse-dynamics readout makes action recovery a stable geometric constraint on latent transitions, unlike jointly trained IDM auxiliaries.</p>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-
-                <!-- IGLS -->
-                <div class="card mb-4 bg-light">
-                    <div class="card-header"><h5 class="mb-0">Instruction-Grounded Latent Scorer (IGLS)</h5></div>
-                    <div class="card-body">
-                        <p>
-                            IGLS aligns language instructions (via MineCLIP text embeddings) with latent
-                            trajectories from ASLWM. By injecting action information through action-conditioned
-                            modulation, IGLS scores imagined trajectories against language goals, enabling
-                            instruction-following planning via CEM in the learned latent space.
+                        <p class="text-center mb-3">
+                            <img src="images/model_architecture.png" width="100%" alt="ActSWM architecture" class="img-fluid border rounded">
                         </p>
-                        <p class="text-center">
-                            <img src="images/placeholder-igls.png" width="80%" alt="IGLS Architecture" class="img-fluid border rounded">
+                        <p class="mb-0 text-muted small text-center">
+                            ActSWM turns action sensitivity into an explicit training and evaluation objective, not only a byproduct of better prediction fidelity.
                         </p>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- 6. Experiment 1: Long-Range Prediction -->
         <div class="row justify-content-md-center mt-4" id="exp1">
             <div class="col-md-10 col-lg-8">
-                <h3 class="mt-4 mb-3 section-heading">Experiment 1: Addressing Compounding Error</h3>
+                <h3 class="mt-4 mb-3 section-heading">Experiment 1: Diagnosing Context Collapse</h3>
                 <p>
-                    We evaluate model variants on cumulative prediction error (MSE) over increasing rollout
-                    steps in Minecraft. The goal is to understand the effect of history context length,
-                    image resolution, rollout-based joint training, and VIDM on long-range prediction fidelity.
+                    Using offline Minecraft H5 trajectories from VPT, we test whether stronger context and multi-step rollout objectives preserve action-conditioned separation.
+                    The key metric is not only future-state similarity, but the <strong>action gap</strong> between ground-truth-action and alternative-action rollouts—exactly the quantity a planner needs when comparing candidate futures.
                 </p>
-
-                <!-- Model Variants Table -->
-                <div class="table-responsive">
+                <div class="table-responsive mb-4">
                     <table class="table table-bordered table-hover align-middle text-center">
                         <thead class="table-dark">
                             <tr>
@@ -281,7 +229,7 @@
                                 <th>Resolution</th>
                                 <th>Rollout Loss</th>
                                 <th>IDM</th>
-                                <th>IDM Structured</th>
+                                <th>IDM Frozen</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -289,221 +237,178 @@
                             <tr><td>2</td><td>LeWM-128-ctx32</td><td>32</td><td>128</td><td>&#10007;</td><td>&#10007;</td><td>&#10007;</td></tr>
                             <tr><td>3</td><td>LeWM-128-ctx32-rollout</td><td>32</td><td>128</td><td>&#10003;</td><td>&#10007;</td><td>&#10007;</td></tr>
                             <tr><td>4</td><td>LeWM-256-ctx3-rollout</td><td>3</td><td>256</td><td>&#10003;</td><td>&#10007;</td><td>&#10007;</td></tr>
-                            <tr><td>5</td><td>ASLWM-128-ctx32-IDM (unstruct)</td><td>32</td><td>128</td><td>&#10003;</td><td>&#10003;</td><td>&#10007;</td></tr>
-                            <tr><td>6</td><td>ASLWM-128-ctx32-IDM (struct)</td><td>32</td><td>128</td><td>&#10003;</td><td>&#10003;</td><td>&#10003;</td></tr>
-                            <tr class="table-success"><td>7</td><td><strong>ASLWM-256-ctx32-IDM (struct)</strong></td><td>32</td><td>256</td><td>&#10003;</td><td>&#10003;</td><td>&#10003;</td></tr>
+                            <tr><td>5</td><td>LeWM + Joint IDM</td><td>32</td><td>128</td><td>&#10003;</td><td>&#10003;</td><td>&#10007;</td></tr>
+                            <tr class="table-success"><td>6</td><td><strong>ActSWM</strong></td><td>32</td><td>128</td><td>&#10003;</td><td>&#10003;</td><td>&#10003;</td></tr>
                         </tbody>
                     </table>
                 </div>
-
-                <!-- Results Plot -->
-                <div class="card mb-4 bg-light">
-                    <div class="card-header"><h5 class="mb-0">Cumulative Error vs. Rollout Steps</h5></div>
-                    <div class="card-body">
-                        <p class="text-center">
-                            <img src="images/placeholder-exp1-plot.png" width="90%" alt="Cumulative MSE over rollout steps" class="img-fluid border rounded">
-                        </p>
-                        <p class="text-muted small text-center">
-                            Figure 2: Cumulative prediction error (MSE) over rollout horizon. ASLWM achieves
-                            0.15 at 32 steps vs. 0.9 for the original LeWM — a <strong>6&times; improvement</strong>.
-                            Models 1-4 (without action-sensitivity mechanisms) all exhibit rapid error accumulation,
-                            confirming that larger context and higher resolution alone do not solve the problem.
-                        </p>
-                    </div>
-                </div>
-
-                <div class="alert alert-info">
-                    <strong>Key Finding:</strong> Simply increasing history context length or image resolution
-                    does <em>not</em> improve long-range prediction — it can even degrade it (Context Collapse).
-                    The combination of rollout-based joint training + structured VIDM + contrastive loss
-                    is necessary to achieve stable long-horizon rollouts (0.15 vs 0.90 cumulative error at 32 steps).
+                <p class="text-center mt-3">
+                    <img src="images/step_drift_combined.png" width="90%" alt="Step-drift results" class="img-fluid border rounded">
+                </p>
+                <p class="text-muted text-center small">
+                    ActSWM preserves a much larger action gap than LeWM variants while maintaining strong rollout quality under long contexts.
+                </p>
+                <div class="alert alert-info takeaway-box">
+                    <strong>Takeaway:</strong> ActSWM improves long-horizon planning usefulness by fixing action-insensitive rollouts, not merely by increasing prediction fidelity.
                 </div>
             </div>
         </div>
 
-        <!-- 7. Experiment 2: Planning -->
         <div class="row justify-content-md-center mt-4" id="exp2">
             <div class="col-md-10 col-lg-8">
-                <h3 class="mt-4 mb-3 section-heading">Experiment 2: Instruction-Goal Planning</h3>
+                <h3 class="mt-4 mb-3 section-heading">Experiment 2: Closed-Loop Planning</h3>
                 <p>
-                    We evaluate ASLWM + IGLS on three Minecraft instruction-following tasks that require
-                    varying planning horizons. Success rate is the primary metric.
+                    We close the loop with CEM planning in MineStudio, in the spirit of model-predictive control used by latent planners such as Dreamer and TD-MPC.
+                    The question is whether action-sensitive rollouts improve real task success over a LeWM baseline, especially on multi-step behaviors rather than near-saturated short skills.
                 </p>
-
-                <!-- Tasks -->
-                <div class="row">
-                    <div class="col-md-4 mb-3">
-                        <div class="card h-100">
-                            <div class="card-header text-center fw-bold">Task 1: Mining Ore</div>
-                            <div class="card-body text-center">
-                                <img src="images/placeholder-task-mine.png" width="100%" alt="Mining Ore" class="img-fluid border rounded mb-2">
-                                <p class="small">Locate and mine specific ore blocks using appropriate tools.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4 mb-3">
-                        <div class="card h-100">
-                            <div class="card-header text-center fw-bold">Task 2: Placing Torches</div>
-                            <div class="card-body text-center">
-                                <img src="images/placeholder-task-torch.png" width="100%" alt="Placing Torches" class="img-fluid border rounded mb-2">
-                                <p class="small">Navigate dark areas and strategically place torches for illumination.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4 mb-3">
-                        <div class="card h-100">
-                            <div class="card-header text-center fw-bold">Task 3: Building Structures</div>
-                            <div class="card-body text-center">
-                                <img src="images/placeholder-task-build.png" width="100%" alt="Building Structures" class="img-fluid border rounded mb-2">
-                                <p class="small">Place blocks in specific arrangements to construct target structures.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Results Table -->
-                <div class="table-responsive">
+                <p class="text-center mt-3">
+                    <img src="images/planning_results.png" width="85%" alt="Planning success rates" class="img-fluid border rounded">
+                </p>
+                <p class="text-muted text-center small">
+                    Torch placement is nearly saturated, while stone mining and pillar building show the clearest gains from more reliable action-conditioned rollouts.
+                </p>
+                <div class="table-responsive mb-4">
                     <table class="table table-bordered table-hover align-middle text-center">
                         <thead class="table-dark">
                             <tr>
-                                <th>#</th>
                                 <th>Model</th>
-                                <th>Mining Ore</th>
-                                <th>Placing Torches</th>
-                                <th>Building Structures</th>
+                                <th>Place Torch</th>
+                                <th>Mine Stone</th>
+                                <th>Build Pillar</th>
                                 <th>Avg.</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr><td>1</td><td>LeWM-128-ctx3</td><td class="text-danger">—</td><td class="text-danger">—</td><td class="text-danger">—</td><td class="text-danger">—</td></tr>
-                            <tr><td>2</td><td>LeWM-128-ctx32</td><td class="text-danger">—</td><td class="text-danger">—</td><td class="text-danger">—</td><td class="text-danger">—</td></tr>
-                            <tr><td>3</td><td>ASLWM-128-ctx32-IDM (unstruct)</td><td class="text-warning">—</td><td class="text-warning">—</td><td class="text-warning">—</td><td class="text-warning">—</td></tr>
-                            <tr><td>4</td><td>ASLWM-128-ctx32-IDM (struct)</td><td class="text-success">—</td><td class="text-success">—</td><td class="text-success">—</td><td class="text-success">—</td></tr>
-                            <tr class="table-success"><td>5</td><td><strong>ASLWM-256-ctx32-IDM (struct)</strong></td><td class="text-success">—</td><td class="text-success">—</td><td class="text-success">—</td><td class="text-success">—</td></tr>
+                            <tr><td>LeWM</td><td>95%</td><td>50%</td><td>55%</td><td>67%</td></tr>
+                            <tr class="table-success"><td><strong>ActSWM</strong></td><td><strong>100%</strong></td><td><strong>95%</strong></td><td><strong>85%</strong></td><td><strong>93%</strong></td></tr>
                         </tbody>
                     </table>
                 </div>
-                <p class="text-muted text-center small">
-                    Table: Success rates (%) on three planning tasks. "—" denotes placeholder for your experimental results.
-                </p>
-
-                <!-- Video Showcase -->
-                <div id="results" class="card mb-4 bg-light">
-                    <h5 class="card-header">Planning Rollout Videos</h5>
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <p class="text-center fw-bold">Mining Ore</p>
-                                <video width="100%" preload="metadata" playsinline controls muted loop>
-                                    <source src="videos/placeholder-mine.mp4" type="video/mp4">
-                                </video>
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <p class="text-center fw-bold">Placing Torches</p>
-                                <video width="100%" preload="metadata" playsinline controls muted loop>
-                                    <source src="videos/placeholder-torch.mp4" type="video/mp4">
-                                </video>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6 mb-3 offset-md-3">
-                                <p class="text-center fw-bold">Building Structures</p>
-                                <video width="100%" preload="metadata" playsinline controls muted loop>
-                                    <source src="videos/placeholder-build.mp4" type="video/mp4">
-                                </video>
-                            </div>
-                        </div>
-                    </div>
+                <div class="alert alert-info takeaway-box">
+                    <strong>Takeaway:</strong> Better action-sensitive latent dynamics translate into more reliable planning, not just better internal metrics.
                 </div>
             </div>
         </div>
 
-        <!-- 8. Experiment 3: IDM / Action Sensitivity -->
         <div class="row justify-content-md-center mt-4" id="exp3">
             <div class="col-md-10 col-lg-8">
-                <h3 class="mt-4 mb-3 section-heading">Experiment 3: Action Sensitivity &amp; Inverse Dynamics</h3>
+                <h3 class="mt-4 mb-3 section-heading">Experiment 3: Cross-Game Local Action Recovery</h3>
                 <p>
-                    ASLWM's action sensitivity ensures that the latent transition faithfully encodes action
-                    information, making the world model itself an effective Inverse Dynamics Model (IDM). We
-                    evaluate the quality of actions inferred by ASLWM across three visually diverse games,
-                    comparing action prediction accuracy and mouse regression error.
+                    Beyond Minecraft planning, we ask whether ActSWM learns action-recoverable dynamics useful for video understanding and pseudo-labeling—extending inverse-dynamics ideas from models such as WAM into multi-step latent rollouts.
+                    On CS2, GTA V, and Apex Legends video windows, we compare against LeWM and the strong video inverse-dynamics baseline D2E G-IDM.
                 </p>
-
-                <!-- Games -->
-                <div class="row">
-                    <div class="col-md-4 mb-3">
-                        <div class="card h-100">
-                            <div class="card-header text-center fw-bold">CS2</div>
-                            <div class="card-body text-center">
-                                <img src="images/placeholder-cs2.png" width="100%" alt="CS2" class="img-fluid border rounded mb-2">
-                                <p class="small">First-person shooter with precise aim requirements.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4 mb-3">
-                        <div class="card h-100">
-                            <div class="card-header text-center fw-bold">GTA V</div>
-                            <div class="card-body text-center">
-                                <img src="images/placeholder-gta.png" width="100%" alt="GTA V" class="img-fluid border rounded mb-2">
-                                <p class="small">Open-world game with diverse driving and interaction mechanics.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4 mb-3">
-                        <div class="card h-100">
-                            <div class="card-header text-center fw-bold">Apex Legends</div>
-                            <div class="card-body text-center">
-                                <img src="images/placeholder-apex.png" width="100%" alt="Apex Legends" class="img-fluid border rounded mb-2">
-                                <p class="small">Fast-paced battle royale with complex movement patterns.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Results Table -->
                 <div class="table-responsive">
                     <table class="table table-bordered table-hover align-middle text-center">
                         <thead class="table-dark">
                             <tr>
-                                <th>Model</th>
-                                <th colspan="2">CS2</th>
-                                <th colspan="2">GTA V</th>
-                                <th colspan="2">Apex Legends</th>
-                            </tr>
-                            <tr>
-                                <th></th>
-                                <th>Action Acc. (%)</th><th>Mouse MSE &#8595;</th>
-                                <th>Action Acc. (%)</th><th>Mouse MSE &#8595;</th>
-                                <th>Action Acc. (%)</th><th>Mouse MSE &#8595;</th>
+                                <th>Game</th>
+                                <th>Method</th>
+                                <th>CEM &#8595;</th>
+                                <th>Rand.</th>
+                                <th>Gap &#8593;</th>
+                                <th>Key &#8593;</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>LeWM (original)</td>
-                                <td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td>
-                            </tr>
-                            <tr class="table-success">
-                                <td><strong>ASLWM (ours)</strong></td>
-                                <td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td>
-                            </tr>
+                            <tr><td>CS2</td><td>D2E G-IDM</td><td>—</td><td>—</td><td>—</td><td>66.8%</td></tr>
+                            <tr><td>CS2</td><td>LeWM</td><td>5.43</td><td>31.88</td><td>26.45</td><td>79.9%</td></tr>
+                            <tr class="table-success"><td>CS2</td><td><strong>ActSWM</strong></td><td>14.25</td><td>26.83</td><td>12.58</td><td><strong>85.1%</strong></td></tr>
+                            <tr><td>GTA V</td><td>D2E G-IDM</td><td>—</td><td>—</td><td>—</td><td>83.7%</td></tr>
+                            <tr><td>GTA V</td><td>LeWM</td><td>55.57</td><td>59.83</td><td>4.26</td><td><strong>91.0%</strong></td></tr>
+                            <tr class="table-success"><td>GTA V</td><td><strong>ActSWM</strong></td><td><strong>28.54</strong></td><td>63.25</td><td><strong>34.71</strong></td><td>88.6%</td></tr>
+                            <tr><td>Apex Legends</td><td>D2E G-IDM</td><td>—</td><td>—</td><td>—</td><td>67.1%</td></tr>
+                            <tr><td>Apex Legends</td><td>LeWM</td><td>11.91</td><td>12.87</td><td>0.96</td><td>73.4%</td></tr>
+                            <tr class="table-success"><td>Apex Legends</td><td><strong>ActSWM</strong></td><td>22.29</td><td>92.85</td><td><strong>70.56</strong></td><td><strong>78.6%</strong></td></tr>
                         </tbody>
                     </table>
                 </div>
                 <p class="text-muted text-center small">
-                    Table: Action prediction accuracy and mouse regression error across three games.
-                    "—" denotes placeholder for experimental results.
+                    ActSWM improves cross-game action recovery quality and strengthens the case for pseudo-labeling from unlabeled gameplay videos.
                 </p>
-
-                <div class="alert alert-info">
-                    <strong>Key Finding:</strong> ASLWM's VIDM component is not a standalone module — it is
-                    an integral part of world model training. The action sensitivity property means the
-                    world model itself can serve as an IDM, generating pseudo action labels from unlabeled
-                    egocentric video, enabling a viable path for data self-expansion in embodied agent research.
+                <div class="alert alert-info takeaway-box">
+                    <strong>Takeaway:</strong> ActSWM learns action-recoverable dynamics that transfer beyond Minecraft planning into cross-game video understanding and scalable pseudo-labeling for future spatial agents.
                 </div>
             </div>
         </div>
 
-        <!-- 9. Contributions -->
+        <div class="row justify-content-md-center mt-4" id="pipelines">
+            <div class="col-md-10 col-lg-8">
+                <h3 class="mt-4 mb-3 section-heading">Data Pipelines</h3>
+                <p>
+                    Game-agent lines such as VPT, STEVE-1, MineDojo, and Voyager show the value of large-scale gameplay supervision, but trainable action-aligned data still requires substantial systems work.
+                    For ActSWM, the pipelines fall into two regimes: GTA V and Apex Legends share a public-video acquisition scaffold with discovery, download, scene segmentation, filtering, and export, while CS2 uses a replay-driven, high-control POV capture system. Together they support world-model training, inverse-dynamics supervision, and cross-game evaluation without treating all games as the same data source.
+                </p>
+
+                <div class="table-responsive mb-4">
+                    <table class="table table-bordered table-hover align-middle text-center pipeline-overview-table">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>Game</th>
+                                <th>Data Source</th>
+                                <th>Core Pipeline</th>
+                                <th>Key Logic</th>
+                                <th>Output</th>
+                                <th>Engineering Focus</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>GTA V</td>
+                                <td>YouTube / Bilibili + curated seeds</td>
+                                <td>Discover &#8594; Download &#8594; Scene Segment &#8594; Blacklist Filter &#8594; Export</td>
+                                <td>Four lightweight detectors reject death, menu, loading, and static clips</td>
+                                <td>Clean clips + manifest + resume logs</td>
+                                <td>Large-scale public-video cleaning with parallel resumable execution</td>
+                            </tr>
+                            <tr>
+                                <td>Apex Legends</td>
+                                <td>YouTube + curated seeds</td>
+                                <td>Discover &#8594; Download &#8594; Scene Segment &#8594; HUD Whitelist &#8594; Export</td>
+                                <td>Positive gameplay confirmation via combat HUD template matching with heuristic fallback</td>
+                                <td>Clean clips + manifest + resume logs</td>
+                                <td>Same scaffold as GTA, but filtering philosophy is reversed</td>
+                            </tr>
+                            <tr>
+                                <td>CS2</td>
+                                <td>Competitive replay demos</td>
+                                <td>Parse Demo &#8594; Launch / Hook &#8594; Tick Control &#8594; Capture POV &#8594; Encode</td>
+                                <td>Programmatic replay control with synchronized per-player, per-round recording</td>
+                                <td>Structured POV videos + downstream aligned data</td>
+                                <td>High-control automatic capture rather than public-video scraping</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="pipeline-block mb-5">
+                    <h5 class="fw-bold">GTA V Pipeline</h5>
+                    <img src="images/pipeline-gta.gif" alt="GTA V pipeline demo" class="img-fluid border rounded pipeline-gif mb-3">
+                    <p><strong>Goal:</strong> Build a large clean clip corpus from public GTA V gameplay videos for IDM and world-model training.</p>
+                    <p><strong>Pipeline:</strong> The system discovers candidates from keyword search and trusted seed URLs, downloads videos at constrained resolution, applies PySceneDetect-based scene segmentation, and runs four lightweight frame-level detectors before policy-level clip decisions.</p>
+                    <p><strong>Why it matters:</strong> GTA is the reference public-video pipeline: a blacklist strategy explicitly enumerates bad content such as death screens, menu / shop views, loading screens, and low-motion clips, then exports only the retained segments with manifest-backed resumability.</p>
+                </div>
+
+                <div class="pipeline-block mb-5">
+                    <h5 class="fw-bold">Apex Legends Pipeline</h5>
+                    <img src="images/pipeline-apex.gif" alt="Apex Legends pipeline demo" class="img-fluid border rounded pipeline-gif mb-3">
+                    <p><strong>Goal:</strong> Mine combat-valid Apex gameplay from public videos while preserving short, rapid, high-action segments.</p>
+                    <p><strong>Pipeline:</strong> Apex reuses the GTA acquisition scaffold — multi-language discovery, download, and scene segmentation — but replaces blacklist filtering with a primary <em>hud_gameplay</em> detector plus loading-screen rejection.</p>
+                    <p><strong>Why it matters:</strong> The filtering philosophy is reversed: instead of enumerating bad frames, the pipeline positively confirms gameplay through combat HUD cues (template matching over ammo, squads-left, compass, and direction markers, with heuristic fallback when templates are insufficient). This avoids discarding true combat clips just because motion-based rules fail under fast camera changes.</p>
+                </div>
+
+                <div class="pipeline-block mb-4">
+                    <h5 class="fw-bold">CS2 Pipeline</h5>
+                    <img src="images/pipeline-cs2.gif" alt="CS2 pipeline demo" class="img-fluid border rounded pipeline-gif mb-3">
+                    <p><strong>Goal:</strong> Collect controlled first-person competitive footage directly from replay demos rather than scrape uncontrolled public videos.</p>
+                    <p><strong>Pipeline:</strong> The system parses CS2 demos, launches the game through HLAE-style hooks, issues tick-level replay commands through a demo-control plugin, captures per-player POV streams with Windows Graphics Capture, and encodes the result into per-round video outputs.</p>
+                    <p><strong>Why it matters:</strong> CS2 is fundamentally a high-control capture stack, not a public-video cleaning line. It yields reproducible per-player, per-round recordings that can later be aligned into downstream supervision and pseudo-labeling workflows.</p>
+                </div>
+                <div class="alert alert-info takeaway-box">
+                    <strong>Takeaway:</strong> Cross-game data collection is not a single reusable recipe: GTA V and Apex share an acquisition scaffold but diverge sharply in filtering logic, while CS2 requires a replay-driven capture stack altogether. The engineering contribution is precisely this game-aware adaptation layer that makes cross-game action supervision feasible.
+                </div>
+            </div>
+        </div>
+
         <div class="row justify-content-md-center mt-4" id="contributions">
             <div class="col-md-10 col-lg-8">
                 <h3 class="mt-4 mb-3 section-heading">Contributions</h3>
@@ -511,33 +416,24 @@
                     <div class="col-md-4 mb-3">
                         <div class="card h-100 border-primary">
                             <div class="card-body">
-                                <h5 class="card-title text-primary">1. ASLWM Framework</h5>
-                                <p class="card-text small">We systematically address the compounding error
-                                    problem in latent world models. We identify the <em>Context Collapse</em>
-                                    phenomenon and reduce 32-step cumulative error from 0.9 to 0.15
-                                    (6&times; improvement) through contrastive loss + VIDM co-design.</p>
+                                <h5 class="card-title text-primary">1. ActSWM</h5>
+                                <p class="card-text small">A JEPA-style action-sensitive world model that keeps long-horizon latent rollouts responsive to action differences rather than collapsing into action-agnostic futures.</p>
                             </div>
                         </div>
                     </div>
                     <div class="col-md-4 mb-3">
                         <div class="card h-100 border-success">
                             <div class="card-body">
-                                <h5 class="card-title text-success">2. Lightweight Planning</h5>
-                                <p class="card-text small">ASLWM + IGLS (&lt;100M params total, 20&times;
-                                    smaller than mainstream VLAs) achieves competitive instruction-following
-                                    performance with millisecond-level latency on consumer GPUs, meeting
-                                    real-time game deployment requirements.</p>
+                                <h5 class="card-title text-success">2. Planning &amp; Recovery</h5>
+                                <p class="card-text small">Stronger MineStudio planning over LeWM, larger long-horizon action gaps, and better cross-game recovery than video IDM baselines such as D2E G-IDM.</p>
                             </div>
                         </div>
                     </div>
                     <div class="col-md-4 mb-3">
                         <div class="card h-100 border-warning">
                             <div class="card-body">
-                                <h5 class="card-title text-warning">3. Built-in IDM</h5>
-                                <p class="card-text small">Action sensitivity ensures the world model is
-                                    inherently an IDM, capable of generating high-quality pseudo action labels
-                                    from unlabeled egocentric video — a path toward data self-expansion
-                                    for embodied agent research.</p>
+                                <h5 class="card-title text-warning">3. Data Systems Support</h5>
+                                <p class="card-text small">Three game-aware pipelines spanning public-video cleaning and replay-driven sample generation for scalable training and action pseudo-labeling.</p>
                             </div>
                         </div>
                     </div>
@@ -545,7 +441,6 @@
             </div>
         </div>
 
-        <!-- 10. BibTeX -->
         <div class="row justify-content-md-center mt-4" id="bibtex">
             <div class="col-md-10 col-lg-8">
                 <h3 class="mt-4 mb-3 section-heading">BibTeX</h3>
@@ -554,40 +449,36 @@
                         <button class="btn btn-sm btn-outline-secondary position-absolute top-0 end-0 m-3" id="copyBibtex" data-clipboard-target="#bibtexContent">
                             Copy
                         </button>
-                        <pre class="bg-dark text-light p-3 rounded" style="overflow-x: auto;"><code id="bibtexContent">@article{author2026aslwm,
-  title   = {Action-Sensitive Latent World Model:
-             Faithful Action-Conditioned Rollouts for Long-Horizon Planning},
-  author  = {Author 1 and Author 2 and Author 3 and Author 4 and Author 5},
-  journal = {arXiv preprint arXiv:XXXX.XXXXX},
-  year    = {2026}
+                        <pre class="bg-dark text-light p-3 rounded" style="overflow-x: auto;"><code id="bibtexContent">@misc{actswm2026,
+  title         = {ActSWM: Action-Sensitive World Models for Long-Horizon Planning in Open-World Games},
+  author        = {Gan, Zhenfeng and Zeng, ZiTong and Cheng, Jiajun and Song, Yeke and Tang, Yongyi and Wang, Xueqian},
+  year          = {2026},
+  eprint        = {2607.26712},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.RO}
 }</code></pre>
                     </div>
                 </div>
                 <p class="text-muted small mt-2">
-                    If you find our work useful, please consider citing us. The full citation will be updated upon publication.
+                    If you find this project page useful, please cite our paper: <a href="https://arxiv.org/abs/2607.26712" target="_blank" rel="noopener">arXiv:2607.26712</a>.
                 </p>
             </div>
         </div>
 
-        <!-- 11. Footer -->
         <div class="row justify-content-md-center mt-5 mb-4">
             <div class="col-md-10 col-lg-8 text-center">
                 <hr>
                 <p class="text-muted small">
-                    &copy; 2026 ASLWM Team. Built with <a href="https://getbootstrap.com/">Bootstrap 5</a>.
-                    Source code available on <a href="#">GitHub</a>.
+                    &copy; 2026 ActSWM. arXiv: <a href="https://arxiv.org/abs/2607.26712" target="_blank" rel="noopener">2607.26712</a>. Built with <a href="https://getbootstrap.com/">Bootstrap 5</a>.
                 </p>
             </div>
         </div>
+    </div>
 
-    </div><!-- /container -->
-
-    <!-- Back to Top -->
     <button id="backToTop" class="btn btn-primary position-fixed bottom-0 end-0 m-4 d-none" title="Back to top">
         &#8593;
     </button>
 
-    <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 </body>
 </html>
