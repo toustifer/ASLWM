@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>ActSWM：面向开放世界游戏长时规划的动作敏感世界模型</title>
+    <meta name="description" content="ActSWM：面向开放世界游戏长时规划的动作敏感世界模型（arXiv: 2607.26712）">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta property="og:image" content="../images/step_drift_two_panel.png">
+    <meta property="og:image:type" content="image/png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://arxiv.org/abs/2607.26712">
+    <meta property="og:title" content="ActSWM：面向开放世界游戏长时规划的动作敏感世界模型">
+    <meta property="og:description" content="动作敏感的潜在空间 rollout，支持长时规划、跨游戏动作恢复与可扩展的伪标注。">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="ActSWM：面向开放世界游戏长时规划的动作敏感世界模型">
+    <meta name="twitter:description" content="动作敏感的潜在空间 rollout，支持长时规划、跨游戏动作恢复与可扩展的伪标注。">
+    <meta name="twitter:image" content="../images/step_drift_two_panel.png">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.8.0/codemirror.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/default.min.css">
+    <link rel="stylesheet" href="../css/app.css">
+    <style>
+        /* 中文排版字体补充 */
+        body {
+            font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", "Noto Sans SC", sans-serif;
+        }
+        h1, h2, h3, h4, h5, h6 {
+            font-family: "Georgia", "Palatino Linotype", "PingFang SC", "Microsoft YaHei", "Noto Serif SC", serif;
+            letter-spacing: 0;
+        }
+    </style>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.8.0/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.5.3/clipboard.min.js"></script>
+    <script src="../js/app.js"></script>
+</head>
+<body data-bs-spy="scroll" data-bs-target="#navbarNav" data-bs-offset="80">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top border-bottom">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="#top">ActSWM</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="#abstract">摘要</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#method">方法</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#exp1">实验一</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#exp2">实验二</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#exp3">实验三</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#pipelines">数据管线</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#bibtex">引用</a></li>
+                    <li class="nav-item"><a class="nav-link" href="../" title="English">EN</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container" id="main">
+        <div class="row mt-5" id="top">
+            <div class="col-md-12 text-center">
+                <p class="eyebrow text-uppercase mb-2">arXiv: 2607.26712</p>
+                <h1 class="fw-bold hero-title">ActSWM：面向开放世界游戏长时规划的动作敏感世界模型</h1>
+                <h3 class="text-muted mt-3 hero-subtitle">
+                    动作敏感的潜在空间 rollout，面向长时规划、跨游戏动作恢复与可扩展的伪标注。
+                </h3>
+            </div>
+        </div>
+
+        <div class="row mt-3">
+            <div class="col-md-12 text-center">
+                <ul class="list-inline authors mb-3">
+                    <li class="list-inline-item">Zhenfeng Gan</li>
+                    <li class="list-inline-item">ZiTong Zeng</li>
+                    <li class="list-inline-item">Jiajun Cheng</li>
+                    <li class="list-inline-item">Yeke Song</li>
+                    <li class="list-inline-item">Yongyi Tang</li>
+                    <li class="list-inline-item">Xueqian Wang</li>
+                </ul>
+                <p class="hero-summary mx-auto mb-0">
+                    ActSWM 识别出 JEPA 风格潜在世界模型中的<strong>上下文塌缩（Context Collapse）</strong>，并在长时规划中保持动作条件的 rollout 分离。
+                </p>
+            </div>
+        </div>
+
+        <div class="row justify-content-md-center mt-4 links-bar">
+            <div class="col-md-2 text-center">
+                <a href="https://arxiv.org/abs/2607.26712" target="_blank" rel="noopener" class="text-decoration-none">
+                    <img src="../images/icons/paper.svg" height="50" alt="论文">
+                    <h5 class="mt-1"><strong>论文</strong></h5>
+                </a>
+            </div>
+            <div class="col-md-2 text-center">
+                <a href="https://arxiv.org/pdf/2607.26712" target="_blank" rel="noopener" class="text-decoration-none">
+                    <img src="../images/icons/pdf.svg" height="50" alt="PDF">
+                    <h5 class="mt-1"><strong>PDF</strong></h5>
+                </a>
+            </div>
+            <div class="col-md-2 text-center">
+                <a href="https://github.com/KeithBlackmore/ActsWM" target="_blank" class="text-decoration-none">
+                    <img src="../images/icons/github.svg" height="50" alt="代码">
+                    <h5 class="mt-1"><strong>代码</strong></h5>
+                </a>
+            </div>
+            <div class="col-md-2 text-center">
+                <a href="#exp2" class="text-decoration-none">
+                    <img src="../images/icons/video.svg" height="50" alt="结果">
+                    <h5 class="mt-1"><strong>结果</strong></h5>
+                </a>
+            </div>
+            <div class="col-md-2 text-center">
+                <a href="#pipelines" class="text-decoration-none">
+                    <img src="../images/icons/data.svg" height="50" alt="数据管线">
+                    <h5 class="mt-1"><strong>管线</strong></h5>
+                </a>
+            </div>
+            <div class="col-md-2 text-center">
+                <a href="#bibtex" class="text-decoration-none">
+                    <img src="../images/icons/model.svg" height="50" alt="引用">
+                    <h5 class="mt-1"><strong>引用</strong></h5>
+                </a>
+            </div>
+        </div>
+
+        <div class="row justify-content-md-center mt-5 hero-result-row">
+            <div class="col-md-10 col-lg-9">
+                <div class="hero-result-card">
+                    <img src="../images/step_drift_two_panel.png" width="100%" alt="ActSWM 步漂移对比" class="img-fluid border rounded">
+                    <p class="text-muted text-center small mt-3 mb-0">
+                        ActSWM 在长时 horizon 下保持动作条件的 rollout 分离，避免了更强上下文 LeWM 基线中出现的动作不敏感塌缩。
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="row justify-content-md-center mt-4" id="abstract">
+            <div class="col-md-10 col-lg-8">
+                <h3 class="mt-4 mb-3 section-heading">摘要</h3>
+                <p>
+                    Dreamer、TD-MPC 与 JEPA 风格的预测器等潜在世界模型，通过在表示空间优化未来控制，实现了高效规划。
+                    但仅凭预测精度并不能保证被规划的动作仍然以有用的方式改变想象出的未来。
+                    我们识别出<strong>上下文塌缩（Context Collapse）</strong>：随着视觉上下文增强，自回归潜在预测器可以在保持高未来状态相似度的同时，对不同动作序列几乎不再敏感。
+                </p>
+                <p>
+                    <strong>ActSWM</strong> 基于 LeWM 风格的表示空间预测，但把动作敏感性当作一种几何约束，而非辅助 readout。
+                    与可随编码器协同适配的联合逆动力学目标不同，ActSWM 将 rollout 分离压力与一个<em>固定</em>的逆动力学约束相结合，使替代动作的未来在长时 horizon 下仍然可区分。
+                </p>
+                <p>
+                    在 VPT Minecraft 轨迹上的步漂移诊断、闭环 MineStudio 规划，以及针对 D2E G-IDM 的跨游戏局部动作恢复实验中，ActSWM 保持更大的动作间隙、提升多步任务成功率，并支持从未标注的游戏视频中做可扩展的动作伪标注。
+                </p>
+            </div>
+        </div>
+
+        <div class="row justify-content-md-center mt-4" id="method">
+            <div class="col-md-10 col-lg-8">
+                <h3 class="mt-4 mb-3 section-heading">方法</h3>
+
+                <div class="card mb-4 bg-light">
+                    <div class="card-header"><h5 class="mb-0">上下文塌缩</h5></div>
+                    <div class="card-body">
+                        <p>
+                            先前的潜在规划器（PlaNet、Dreamer、TD-MPC、LeWM）大多优化未来状态的保真度。
+                            更长的上下文或多步 rollout 损失可以降低复合误差，但它们并不会自动保持动作条件生效：
+                            预测器可能从视觉历史外推出状态演进，却对候选控制不再敏感。
+                        </p>
+                        <p>
+                            这与经典的曝光偏差不同。对规划而言它更深层：如果真实动作与替代动作的 rollout 塌缩到一起，CEM 风格的规划器就无法比较不同动作序列的下游后果。
+                        </p>
+                        <p class="text-center mb-0">
+                            <img src="../images/step_drift_action_sensitivity.png" width="80%" alt="长上下文下的动作敏感性" class="img-fluid border rounded">
+                        </p>
+                    </div>
+                </div>
+
+                <div class="card mb-4 bg-light">
+                    <div class="card-header"><h5 class="mb-0">ActSWM 设计</h5></div>
+                    <div class="card-body">
+                        <p class="small text-muted">
+                            ActSWM 继承 JEPA / LeWM 的表示空间预测，再加入 rollout 级分离和一个受逆动力学思想（如 WAM）启发的非自适应动作约束，同时避免联合的编码器–readout 协同适配。
+                        </p>
+                        <p class="text-center mb-3">
+                            <img src="../images/paper_framework.png" width="100%" alt="论文中的 ActSWM 概览" class="img-fluid border rounded">
+                        </p>
+                        <p class="mb-0 text-muted small text-center">
+                            论文图 1：ActSWM 概览——从上下文塌缩到动作敏感的潜在 rollout、规划与跨游戏动作恢复。
+                        </p>
+                        <div class="row">
+                            <div class="col-md-4 mb-3">
+                                <div class="card h-100 border-primary">
+                                    <div class="card-body text-center">
+                                        <h5 class="card-title text-primary">1. 预测主干</h5>
+                                        <p class="card-text small">一个 JEPA 风格的潜在预测器（LeWM 谱系）在动作条件的潜在空间中预测未来表示，而非像素。</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <div class="card h-100 border-success">
+                                    <div class="card-body text-center">
+                                        <h5 class="card-title text-success">2. Rollout 分离</h5>
+                                        <p class="card-text small">一个 hinge 风格的分离损失让真实动作与替代动作的未来在多步 rollout 中保持可区分。</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <div class="card h-100 border-warning">
+                                    <div class="card-body text-center">
+                                        <h5 class="card-title text-warning">3. 固定 IDM 约束</h5>
+                                        <p class="card-text small">一个冻结的逆动力学 readout 让动作恢复成为潜在转移上的稳定几何约束，不同于联合训练的 IDM 辅助头。</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="text-center mb-3">
+                            <img src="../images/model_architecture.png" width="100%" alt="ActSWM 架构" class="img-fluid border rounded">
+                        </p>
+                        <p class="mb-0 text-muted small text-center">
+                            ActSWM 把动作敏感性变成明确的训练与评估目标，而不仅仅是预测保真度提升的副产品。
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row justify-content-md-center mt-4" id="exp1">
+            <div class="col-md-10 col-lg-8">
+                <h3 class="mt-4 mb-3 section-heading">实验一：诊断上下文塌缩</h3>
+                <p>
+                    基于 VPT 的离线 Minecraft H5 轨迹，我们检验更强的上下文与多步 rollout 目标是否保持动作条件的分离。
+                    关键指标不仅是未来状态相似度，更是真实动作与替代动作 rollout 之间的<strong>动作间隙（action gap）</strong>——这正是规划器比较候选未来时所需的量。
+                </p>
+                <div class="table-responsive mb-4">
+                    <table class="table table-bordered table-hover align-middle text-center">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>#</th>
+                                <th>模型变体</th>
+                                <th>历史上下文</th>
+                                <th>分辨率</th>
+                                <th>Rollout 损失</th>
+                                <th>IDM</th>
+                                <th>IDM 冻结</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>1</td><td>LeWM-128-ctx3</td><td>3</td><td>128</td><td>&#10007;</td><td>&#10007;</td><td>&#10007;</td></tr>
+                            <tr><td>2</td><td>LeWM-128-ctx32</td><td>32</td><td>128</td><td>&#10007;</td><td>&#10007;</td><td>&#10007;</td></tr>
+                            <tr><td>3</td><td>LeWM-128-ctx32-rollout</td><td>32</td><td>128</td><td>&#10003;</td><td>&#10007;</td><td>&#10007;</td></tr>
+                            <tr><td>4</td><td>LeWM-256-ctx3-rollout</td><td>3</td><td>256</td><td>&#10003;</td><td>&#10007;</td><td>&#10007;</td></tr>
+                            <tr><td>5</td><td>LeWM + 联合 IDM</td><td>32</td><td>128</td><td>&#10003;</td><td>&#10003;</td><td>&#10007;</td></tr>
+                            <tr class="table-success"><td>6</td><td><strong>ActSWM</strong></td><td>32</td><td>128</td><td>&#10003;</td><td>&#10003;</td><td>&#10003;</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p class="text-center mt-3">
+                    <img src="../images/step_drift_combined.png" width="90%" alt="步漂移结果" class="img-fluid border rounded">
+                </p>
+                <p class="text-muted text-center small">
+                    ActSWM 在保持长上下文下强 rollout 质量的同时，比 LeWM 变体保留大得多的动作间隙。
+                </p>
+                <div class="row mt-3">
+                    <div class="col-md-6 mb-3">
+                        <img src="../images/step_drift_cosine.png" width="100%" alt="步漂移余弦相似度" class="img-fluid border rounded">
+                        <p class="text-muted text-center small mt-1 mb-0">各 rollout 步上的未来状态余弦相似度。</p>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <img src="../images/step_drift_action_gap.png" width="100%" alt="步漂移动作间隙" class="img-fluid border rounded">
+                        <p class="text-muted text-center small mt-1 mb-0">动作间隙——记录动作与替代动作 rollout 之间的可分离度。</p>
+                    </div>
+                </div>
+                <div class="alert alert-info takeaway-box">
+                    <strong>结论：</strong>ActSWM 通过修复动作不敏感的 rollout 提升长时规划的可用性，而不仅仅是提高预测保真度。
+                </div>
+            </div>
+        </div>
+
+        <div class="row justify-content-md-center mt-4" id="exp2">
+            <div class="col-md-10 col-lg-8">
+                <h3 class="mt-4 mb-3 section-heading">实验二：闭环规划</h3>
+                <p>
+                    我们在 MineStudio 中闭环地使用 CEM 规划，延续 Dreamer 与 TD-MPC 等潜在规划器所用的模型预测控制思路。
+                    问题在于：动作敏感的 rollout 是否能相对 LeWM 基线真正提升任务成功率，尤其是在多步行为而非接近饱和的短技能上。
+                </p>
+                <p class="text-center mt-3">
+                    <img src="../images/planning_results.png" width="85%" alt="规划成功率" class="img-fluid border rounded">
+                </p>
+                <p class="text-muted text-center small">
+                    火把放置接近饱和，而挖石与建柱从更可靠的动作条件 rollout 中获益最明显。
+                </p>
+                <p class="text-center mt-3">
+                    <img src="../images/planning_by_task.png" width="85%" alt="按任务拆分的规划成功率" class="img-fluid border rounded">
+                </p>
+                <p class="text-muted text-center small">
+                    各任务成功率拆分：ActSWM 在每个任务上都领先，在动作序列最关键的场景中差距最大。
+                </p>
+                <div class="table-responsive mb-4">
+                    <table class="table table-bordered table-hover align-middle text-center">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>模型</th>
+                                <th>放置火把</th>
+                                <th>挖石</th>
+                                <th>建柱</th>
+                                <th>平均</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>LeWM</td><td>95%</td><td>50%</td><td>55%</td><td>67%</td></tr>
+                            <tr class="table-success"><td><strong>ActSWM</strong></td><td><strong>100%</strong></td><td><strong>95%</strong></td><td><strong>85%</strong></td><td><strong>93%</strong></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="alert alert-info takeaway-box">
+                    <strong>结论：</strong>更好的动作敏感潜在动力学转化为更可靠的规划，而不仅是更好的内部指标。
+                </div>
+            </div>
+        </div>
+
+        <div class="row justify-content-md-center mt-4" id="exp3">
+            <div class="col-md-10 col-lg-8">
+                <h3 class="mt-4 mb-3 section-heading">实验三：跨游戏局部动作恢复</h3>
+                <p>
+                    在 Minecraft 规划之外，我们考察 ActSWM 是否学到对视频理解与伪标注有益的动作可恢复动力学——把 WAM 等模型的逆动力学思想扩展到多步潜在 rollout。
+                    在 CS2、GTA V 与 Apex Legends 的视频窗口上，我们与 LeWM 以及强视频逆动力学基线 D2E G-IDM 进行对比。
+                </p>
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover align-middle text-center">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>游戏</th>
+                                <th>方法</th>
+                                <th>CEM &#8595;</th>
+                                <th>随机</th>
+                                <th>间隙 &#8593;</th>
+                                <th>按键 &#8593;</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>CS2</td><td>D2E G-IDM</td><td>—</td><td>—</td><td>—</td><td>66.8%</td></tr>
+                            <tr><td>CS2</td><td>LeWM</td><td>5.43</td><td>31.88</td><td>26.45</td><td>79.9%</td></tr>
+                            <tr class="table-success"><td>CS2</td><td><strong>ActSWM</strong></td><td>14.25</td><td>26.83</td><td>12.58</td><td><strong>85.1%</strong></td></tr>
+                            <tr><td>GTA V</td><td>D2E G-IDM</td><td>—</td><td>—</td><td>—</td><td>83.7%</td></tr>
+                            <tr><td>GTA V</td><td>LeWM</td><td>55.57</td><td>59.83</td><td>4.26</td><td><strong>91.0%</strong></td></tr>
+                            <tr class="table-success"><td>GTA V</td><td><strong>ActSWM</strong></td><td><strong>28.54</strong></td><td>63.25</td><td><strong>34.71</strong></td><td>88.6%</td></tr>
+                            <tr><td>Apex Legends</td><td>D2E G-IDM</td><td>—</td><td>—</td><td>—</td><td>67.1%</td></tr>
+                            <tr><td>Apex Legends</td><td>LeWM</td><td>11.91</td><td>12.87</td><td>0.96</td><td>73.4%</td></tr>
+                            <tr class="table-success"><td>Apex Legends</td><td><strong>ActSWM</strong></td><td>22.29</td><td>92.85</td><td><strong>70.56</strong></td><td><strong>78.6%</strong></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p class="text-muted text-center small">
+                    ActSWM 提升跨游戏动作恢复质量，并强化了从无标注游戏视频做伪标注的可行性。
+                </p>
+                <div class="alert alert-info takeaway-box">
+                    <strong>结论：</strong>ActSWM 学到的动作可恢复动力学可迁移到 Minecraft 规划之外的跨游戏视频理解，并为未来空间智能体提供可扩展的伪标注。
+                </div>
+            </div>
+        </div>
+
+        <div class="row justify-content-md-center mt-4" id="pipelines">
+            <div class="col-md-10 col-lg-8">
+                <h3 class="mt-4 mb-3 section-heading">数据管线</h3>
+                <p>
+                    VPT、STEVE-1、MineDojo 与 Voyager 等游戏智能体路线表明大规模游戏监督的价值，但可训练的动作对齐数据仍需要大量系统工程。
+                    对 ActSWM 而言，管线分为两种模式：GTA V 与 Apex Legends 共用"公开视频采集"骨架（发现、下载、场景分割、过滤、导出）；CS2 则使用基于回放驱动的高控制 POV 采集系统。它们共同支撑世界模型训练、逆动力学监督与跨游戏评估，而不把各游戏当作同一种数据源。
+                </p>
+                <p class="text-center mb-4">
+                    <img src="../images/multi_track_pipeline.png" width="100%" alt="多轨游戏数据构建框架" class="img-fluid border rounded">
+                </p>
+
+                <div class="table-responsive mb-4">
+                    <table class="table table-bordered table-hover align-middle text-center pipeline-overview-table">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>游戏</th>
+                                <th>数据源</th>
+                                <th>核心管线</th>
+                                <th>关键逻辑</th>
+                                <th>输出</th>
+                                <th>工程重点</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>GTA V</td>
+                                <td>YouTube / Bilibili + 精选种子</td>
+                                <td>发现 &#8594; 下载 &#8594; 场景分割 &#8594; 黑名单过滤 &#8594; 导出</td>
+                                <td>四个轻量检测器拒绝死亡、菜单、加载与静止片段</td>
+                                <td>干净片段 + 清单 + 续跑日志</td>
+                                <td>大规模公开视频清洗与并行可续跑执行</td>
+                            </tr>
+                            <tr>
+                                <td>Apex Legends</td>
+                                <td>YouTube + 精选种子</td>
+                                <td>发现 &#8594; 下载 &#8594; 场景分割 &#8594; HUD 白名单 &#8594; 导出</td>
+                                <td>通过战斗 HUD 模板匹配（带启发式回退）正向确认游戏画面</td>
+                                <td>干净片段 + 清单 + 续跑日志</td>
+                                <td>与 GTA 同骨架，但过滤哲学相反</td>
+                            </tr>
+                            <tr>
+                                <td>CS2</td>
+                                <td>竞技回放 demo</td>
+                                <td>解析 Demo &#8594; 启动 / Hook &#8594; 帧级控制 &#8594; 捕捉 POV &#8594; 编码</td>
+                                <td>程序化回放控制，带同步的逐玩家、逐回合录制</td>
+                                <td>结构化 POV 视频 + 下游对齐数据</td>
+                                <td>高控制自动捕捉，而非公开视频抓取</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="pipeline-block mb-5">
+                    <h5 class="fw-bold">GTA V 管线</h5>
+                    <p><strong>目标：</strong>从公开 GTA V 游戏视频构建大规模干净片段语料，用于 IDM 与世界模型训练。</p>
+                    <p><strong>管线：</strong>系统通过关键词搜索与可信种子 URL 发现候选，以受限分辨率下载视频，应用基于 PySceneDetect 的场景分割，并在策略级片段决策前运行四个轻量帧级检测器。</p>
+                    <p><strong>重要性：</strong>GTA 是公开视频管线的参照：一种黑名单策略显式枚举死亡画面、菜单/商店视图、加载画面与低运动片段等坏内容，然后仅导出保留的片段，并以清单支持续跑。</p>
+                </div>
+
+                <div class="pipeline-block mb-5">
+                    <h5 class="fw-bold">Apex Legends 管线</h5>
+                    <p><strong>目标：</strong>从公开视频中挖掘战斗有效（combat-valid）的 Apex 游戏画面，同时保留短小、快速、高动作的片段。</p>
+                    <p><strong>管线：</strong>Apex 复用 GTA 的采集骨架——多语言发现、下载与场景分割——但用主 <em>hud_gameplay</em> 检测器加加载画面拒绝，替换掉黑名单过滤。</p>
+                    <p><strong>重要性：</strong>过滤哲学被反转：它不枚举坏帧，而是通过战斗 HUD 线索（对弹药、剩余小队、罗盘与方向标记做模板匹配，模板不足时用启发式回退）正向确认游戏画面。这避免了因快速镜头变化下基于运动的规则失效而误弃真实战斗片段。</p>
+                </div>
+
+                <div class="pipeline-block mb-4">
+                    <h5 class="fw-bold">CS2 管线</h5>
+                    <p><strong>目标：</strong>直接从回放 demo 采集可控的第一人称竞技画面，而非抓取不受控的公开视频。</p>
+                    <p><strong>管线：</strong>系统解析 CS2 demo，通过 HLAE 风格 hook 启动游戏，经 demo 控制插件下发帧级回放命令，用 Windows Graphics Capture 捕捉各玩家 POV 流，并编码为逐回合的视频输出。</p>
+                    <p><strong>重要性：</strong>CS2 本质上是高控制采集栈，而非公开视频清洗线。它产出可复现的逐玩家、逐回合录制，后续可对齐为下游监督与伪标注工作流。</p>
+                </div>
+                <div class="alert alert-info takeaway-box">
+                    <strong>结论：</strong>跨游戏数据采集并非单一可复用配方：GTA V 与 Apex 共享采集骨架但在过滤逻辑上迥异，CS2 则需要完全不同的回放驱动采集栈。工程贡献恰恰是这层"游戏感知适配层"，使跨游戏动作监督成为可能。
+                </div>
+            </div>
+        </div>
+
+        <div class="row justify-content-md-center mt-4" id="contributions">
+            <div class="col-md-10 col-lg-8">
+                <h3 class="mt-4 mb-3 section-heading">贡献</h3>
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <div class="card h-100 border-primary">
+                            <div class="card-body">
+                                <h5 class="card-title text-primary">1. ActSWM</h5>
+                                <p class="card-text small">一个 JEPA 风格的动作敏感世界模型，让长时潜在 rollout 对动作差异保持响应，而非塌缩成动作无关的未来。</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="card h-100 border-success">
+                            <div class="card-body">
+                                <h5 class="card-title text-success">2. 规划与恢复</h5>
+                                <p class="card-text small">相比 LeWM 更强的 MineStudio 规划、更大的长时动作间隙，以及优于 D2E G-IDM 等视频 IDM 基线的跨游戏恢复。</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="card h-100 border-warning">
+                            <div class="card-body">
+                                <h5 class="card-title text-warning">3. 数据系统支撑</h5>
+                                <p class="card-text small">覆盖公开视频清洗与回放驱动样本生成的三条游戏感知管线，支撑可扩展的训练与动作伪标注。</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row justify-content-md-center mt-4" id="bibtex">
+            <div class="col-md-10 col-lg-8">
+                <h3 class="mt-4 mb-3 section-heading">引用（BibTeX）</h3>
+                <div class="card bg-light">
+                    <div class="card-body position-relative">
+                        <button class="btn btn-sm btn-outline-secondary position-absolute top-0 end-0 m-3" id="copyBibtex" data-clipboard-target="#bibtexContent">
+                            复制
+                        </button>
+                        <pre class="bg-dark text-light p-3 rounded" style="overflow-x: auto;"><code id="bibtexContent">@misc{actswm2026,
+  title         = {ActSWM: Action-Sensitive World Models for Long-Horizon Planning in Open-World Games},
+  author        = {Gan, Zhenfeng and Zeng, ZiTong and Cheng, Jiajun and Song, Yeke and Tang, Yongyi and Wang, Xueqian},
+  year          = {2026},
+  eprint        = {2607.26712},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.RO}
+}</code></pre>
+                    </div>
+                </div>
+                <p class="text-muted small mt-2">
+                    如果你觉得这个项目页有用，请引用我们的论文：<a href="https://arxiv.org/abs/2607.26712" target="_blank" rel="noopener">arXiv:2607.26712</a>。
+                </p>
+            </div>
+        </div>
+
+        <div class="row justify-content-md-center mt-5 mb-4">
+            <div class="col-md-10 col-lg-8 text-center">
+                <hr>
+                <p class="text-muted small">
+                    &copy; 2026 ActSWM. arXiv: <a href="https://arxiv.org/abs/2607.26712" target="_blank" rel="noopener">2607.26712</a>. 基于 <a href="https://getbootstrap.com/">Bootstrap 5</a> 构建。
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <button id="backToTop" class="btn btn-primary position-fixed bottom-0 end-0 m-4 d-none" title="返回顶部">
+        &#8593;
+    </button>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+</body>
+</html>
