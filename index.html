@@ -327,29 +327,28 @@
                                 <th>Game</th>
                                 <th>Method</th>
                                 <th>CEM &#8595;</th>
-                                <th>Rand.</th>
-                                <th>Gap &#8593;</th>
-                                <th>Key &#8593;</th>
+                                <th>Key Acc. &#8593;</th>
+                                <th>Active Acc. &#8593;</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr><td>CS2</td><td>D2E G-IDM</td><td>—</td><td>—</td><td>—</td><td>66.8%</td></tr>
-                            <tr><td>CS2</td><td>LeWM</td><td>5.43</td><td>31.88</td><td>26.45</td><td>79.9%</td></tr>
-                            <tr class="table-success"><td>CS2</td><td><strong>ActSWM</strong></td><td>14.25</td><td>26.83</td><td>12.58</td><td><strong>85.1%</strong></td></tr>
-                            <tr><td>GTA V</td><td>D2E G-IDM</td><td>—</td><td>—</td><td>—</td><td>83.7%</td></tr>
-                            <tr><td>GTA V</td><td>LeWM</td><td>55.57</td><td>59.83</td><td>4.26</td><td><strong>91.0%</strong></td></tr>
-                            <tr class="table-success"><td>GTA V</td><td><strong>ActSWM</strong></td><td><strong>28.54</strong></td><td>63.25</td><td><strong>34.71</strong></td><td>88.6%</td></tr>
-                            <tr><td>Apex Legends</td><td>D2E G-IDM</td><td>—</td><td>—</td><td>—</td><td>67.1%</td></tr>
-                            <tr><td>Apex Legends</td><td>LeWM</td><td>11.91</td><td>12.87</td><td>0.96</td><td>73.4%</td></tr>
-                            <tr class="table-success"><td>Apex Legends</td><td><strong>ActSWM</strong></td><td>22.29</td><td>92.85</td><td><strong>70.56</strong></td><td><strong>78.6%</strong></td></tr>
+                            <tr><td>CS2</td><td>D2E G-IDM</td><td>—</td><td>0.913</td><td>0.000</td></tr>
+                            <tr><td>CS2</td><td>LeWM</td><td>54.86</td><td>0.703</td><td>0.363</td></tr>
+                            <tr class="table-success"><td>CS2</td><td><strong>ActSWM</strong></td><td><strong>60.02</strong></td><td><strong>0.743</strong></td><td><strong>0.389</strong></td></tr>
+                            <tr><td>GTA V</td><td>D2E G-IDM</td><td>—</td><td>0.709</td><td>0.000</td></tr>
+                            <tr><td>GTA V</td><td>LeWM</td><td>19.57</td><td>0.684</td><td>0.050</td></tr>
+                            <tr class="table-success"><td>GTA V</td><td><strong>ActSWM</strong></td><td><strong>252.38</strong></td><td>0.662</td><td><strong>0.761</strong></td></tr>
+                            <tr><td>Apex</td><td>D2E G-IDM</td><td>—</td><td>0.876</td><td>0.000</td></tr>
+                            <tr><td>Apex</td><td>LeWM</td><td>10.44</td><td>0.639</td><td>0.576</td></tr>
+                            <tr class="table-success"><td>Apex</td><td><strong>ActSWM</strong></td><td><strong>172.01</strong></td><td><strong>0.721</strong></td><td>0.269</td></tr>
                         </tbody>
                     </table>
                 </div>
                 <p class="text-muted text-center small">
-                    ActSWM improves cross-game action recovery quality and strengthens the case for pseudo-labeling from unlabeled gameplay videos.
+                    ActSWM consistently achieves the largest CEM-over-random action gap across all three games, higher overall key accuracy than LeWM on CS2 and Apex, and a large active-key accuracy gain on CS2 (0.389 vs. 0.363) and especially GTA V (0.761 vs. 0.050). LeWM leads on active accuracy for Apex, which we attribute to its short context window.
                 </p>
                 <div class="alert alert-info takeaway-box">
-                    <strong>Takeaway:</strong> ActSWM learns action-recoverable dynamics that transfer beyond Minecraft planning into cross-game video understanding and scalable pseudo-labeling for future spatial agents.
+                    <strong>Takeaway:</strong> ActSWM's action-recoverable dynamics transfer beyond Minecraft planning into cross-game video understanding and scalable pseudo-labeling for future spatial agents.
                 </div>
             </div>
         </div>

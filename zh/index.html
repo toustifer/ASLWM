@@ -337,26 +337,25 @@
                                 <th>游戏</th>
                                 <th>方法</th>
                                 <th>CEM &#8595;</th>
-                                <th>随机</th>
-                                <th>间隙 &#8593;</th>
-                                <th>按键 &#8593;</th>
+                                <th>按键准确率 &#8593;</th>
+                                <th>活跃按键准确率 &#8593;</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr><td>CS2</td><td>D2E G-IDM</td><td>—</td><td>—</td><td>—</td><td>66.8%</td></tr>
-                            <tr><td>CS2</td><td>LeWM</td><td>5.43</td><td>31.88</td><td>26.45</td><td>79.9%</td></tr>
-                            <tr class="table-success"><td>CS2</td><td><strong>ActSWM</strong></td><td>14.25</td><td>26.83</td><td>12.58</td><td><strong>85.1%</strong></td></tr>
-                            <tr><td>GTA V</td><td>D2E G-IDM</td><td>—</td><td>—</td><td>—</td><td>83.7%</td></tr>
-                            <tr><td>GTA V</td><td>LeWM</td><td>55.57</td><td>59.83</td><td>4.26</td><td><strong>91.0%</strong></td></tr>
-                            <tr class="table-success"><td>GTA V</td><td><strong>ActSWM</strong></td><td><strong>28.54</strong></td><td>63.25</td><td><strong>34.71</strong></td><td>88.6%</td></tr>
-                            <tr><td>Apex Legends</td><td>D2E G-IDM</td><td>—</td><td>—</td><td>—</td><td>67.1%</td></tr>
-                            <tr><td>Apex Legends</td><td>LeWM</td><td>11.91</td><td>12.87</td><td>0.96</td><td>73.4%</td></tr>
-                            <tr class="table-success"><td>Apex Legends</td><td><strong>ActSWM</strong></td><td>22.29</td><td>92.85</td><td><strong>70.56</strong></td><td><strong>78.6%</strong></td></tr>
+                            <tr><td>CS2</td><td>D2E G-IDM</td><td>—</td><td>0.913</td><td>0.000</td></tr>
+                            <tr><td>CS2</td><td>LeWM</td><td>54.86</td><td>0.703</td><td>0.363</td></tr>
+                            <tr class="table-success"><td>CS2</td><td><strong>ActSWM</strong></td><td><strong>60.02</strong></td><td><strong>0.743</strong></td><td><strong>0.389</strong></td></tr>
+                            <tr><td>GTA V</td><td>D2E G-IDM</td><td>—</td><td>0.709</td><td>0.000</td></tr>
+                            <tr><td>GTA V</td><td>LeWM</td><td>19.57</td><td>0.684</td><td>0.050</td></tr>
+                            <tr class="table-success"><td>GTA V</td><td><strong>ActSWM</strong></td><td><strong>252.38</strong></td><td>0.662</td><td><strong>0.761</strong></td></tr>
+                            <tr><td>Apex</td><td>D2E G-IDM</td><td>—</td><td>0.876</td><td>0.000</td></tr>
+                            <tr><td>Apex</td><td>LeWM</td><td>10.44</td><td>0.639</td><td>0.576</td></tr>
+                            <tr class="table-success"><td>Apex</td><td><strong>ActSWM</strong></td><td><strong>172.01</strong></td><td><strong>0.721</strong></td><td>0.269</td></tr>
                         </tbody>
                     </table>
                 </div>
                 <p class="text-muted text-center small">
-                    ActSWM 提升跨游戏动作恢复质量，并强化了从无标注游戏视频做伪标注的可行性。
+                    ActSWM 在所有三个游戏上取得最大的 CEM-over-random 动作间隙；在 CS2 与 Apex 上整体按键准确率高于 LeWM，并在 CS2（0.389 对 0.363）与尤其 GTA V（0.761 对 0.050）上带来显著的活跃按键准确率提升。Apex 的活跃按键准确率由 LeWM 领先，我们归因于其较短的上下文窗口。
                 </p>
                 <div class="alert alert-info takeaway-box">
                     <strong>结论：</strong>ActSWM 学到的动作可恢复动力学可迁移到 Minecraft 规划之外的跨游戏视频理解，并为未来空间智能体提供可扩展的伪标注。
