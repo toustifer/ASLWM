@@ -174,8 +174,12 @@ h1, h2, h3, h4, h5, h6 {
 
 /* ---------- Links bar (action buttons) ---------- */
 .links-bar .col-md-2 a {
-    display: inline-block;
-    padding: 0.55rem 0.7rem 0.4rem;
+    display: inline-flex;
+    min-width: 7.2rem;
+    min-height: 3rem;
+    align-items: center;
+    justify-content: center;
+    padding: 0.7rem 0.9rem;
     border-radius: var(--radius-sm);
     transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
 }
